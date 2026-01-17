@@ -1,0 +1,12 @@
+export enum ROLE {
+  ADMIN = "ADMIN",
+  CUSTOMER = "CUSTOMER",
+}
+
+export enum ORDER_STATUS {
+  PENDING = "PENDING",
+  PAID = "PAID",
+  SHIPPED = "SHIPPED",
+  DELIVERED = "DELIVERED",
+  CANCELLED = "CANCELLED",
+}

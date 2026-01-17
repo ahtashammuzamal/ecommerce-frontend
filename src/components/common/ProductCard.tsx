@@ -5,7 +5,7 @@ type ProductCardProps = {
   imageURL: string;
   title: string;
   category: string;
-  price: string;
+  price: number;
 };
 
 const ProductCard = ({
@@ -17,7 +17,10 @@ const ProductCard = ({
   return (
     <div className="space-y-4">
       <div className="group h-90 rounded-xl overflow-hidden relative flex items-end p-4">
-        <div className="bg-img-styling bg-[url('product.jpg')]" />
+        <div
+          className={`bg-img-styling`}
+          style={{ backgroundImage: `url('${imageURL}')` }}
+        />
         <CartButton className={"relative w-full hidden group-hover:block"} />
       </div>
       <div className="space-y-2 [&>p]:text-sm">

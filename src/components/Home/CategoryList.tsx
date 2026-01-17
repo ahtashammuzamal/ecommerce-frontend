@@ -1,12 +1,6 @@
+import { MOCK_CATEGORIES } from "@/mock/categories";
 import CategoryCard from "./CategoryCard";
 import SectionHeader from "./SectionHeader";
-
-const productCategories = [
-  { name: "Living Room", productsCount: 124 },
-  { name: "Bedroom", productsCount: 100 },
-  { name: "Kitchen", productsCount: 156 },
-  { name: "Office", productsCount: 67 },
-];
 
 const CategoryList = () => {
   return (
@@ -18,12 +12,8 @@ const CategoryList = () => {
         buttonText={"View All Categories"}
       />
       <div className="section-elements-styling">
-        {productCategories.map((category, index) => (
-          <CategoryCard
-            key={index}
-            name={category.name}
-            productsCount={category.productsCount}
-          />
+        {MOCK_CATEGORIES.slice(0, 4).map((category) => (
+          <CategoryCard key={category.id} name={category.name} />
         ))}
       </div>
     </div>

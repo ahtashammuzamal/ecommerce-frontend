@@ -9,6 +9,7 @@ import {
 import { MainLayout } from "./components/layout/MainLayout.tsx";
 import Home from "./Pages/Home.tsx";
 import Products from "./Pages/Products.tsx";
+import Cart from "./Pages/Cart.tsx";
 
 const routes: RouteObject[] = [
   {
@@ -22,6 +23,10 @@ const routes: RouteObject[] = [
       {
         path: "products",
         element: <Products />,
+      },
+      {
+        path: "cart",
+        element: <Cart />,
       },
     ],
   },

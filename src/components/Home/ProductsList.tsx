@@ -1,32 +1,6 @@
+import { MOCK_PRODUCTS } from "@/mock/products";
 import ProductCard from "../common/ProductCard";
 import SectionHeader from "./SectionHeader";
-
-const products = [
-  {
-    imageURL: "product.jpg",
-    title: "Artisan Ceramic Vase",
-    category: "Living Room",
-    price: "89",
-  },
-  {
-    imageURL: "product.jpg",
-    title: "Minimalist Oak Coffee Table",
-    category: "Kitchen",
-    price: "99",
-  },
-  {
-    imageURL: "product.jpg",
-    title: "Brass Pendant Light",
-    category: "Bedroom",
-    price: "199",
-  },
-  {
-    imageURL: "product.jpg",
-    title: "Ceramic Dinner Set",
-    category: "Ceramic Tiles",
-    price: "129",
-  },
-];
 
 const ProductsList = () => {
   return (
@@ -34,16 +8,16 @@ const ProductsList = () => {
       <SectionHeader
         title={"Featured Collection"}
         description={"Handpicked favorites from our curators"}
-        to={"/shop"}
+        to={"/products"}
         buttonText={"View All"}
       />
       <div className="section-elements-styling">
-        {products.map((product, index) => (
+        {MOCK_PRODUCTS.slice(0, 4).map((product, index) => (
           <ProductCard
             key={index}
-            imageURL={product.imageURL}
+            imageURL={product.images[0]}
             title={product.title}
-            category={product.category}
+            category={product.category.name}
             price={product.price}
           />
         ))}
