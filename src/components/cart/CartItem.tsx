@@ -1,5 +1,5 @@
 import { Trash2 } from "lucide-react";
-import QuantityVariable from "./QuantityVariable";
+import QuantityVariable from "../common/QuantityVariable";
 import LineSpacer from "../common/LineSpacer";
 
 type CartItemProps = {

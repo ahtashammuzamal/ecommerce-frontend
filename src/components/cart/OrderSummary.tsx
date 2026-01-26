@@ -22,7 +22,7 @@ const OrderSummary = ({ className }: OrderSummaryProps) => {
             <p>$727.00</p>
           </div>
           <div className="space-y-4 ">
-            <IconButton className="w-full py-5">
+            <IconButton className="w-full py-5" to="/checkout">
               Proceed to Checkout
               <ArrowRight />
             </IconButton>

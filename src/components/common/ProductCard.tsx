@@ -1,7 +1,9 @@
 import { DollarSign } from "lucide-react";
 import CartButton from "./CartButton";
+import { Link } from "react-router-dom";
 
 type ProductCardProps = {
+  id: number;
   imageURL: string;
   title: string;
   category: string;
@@ -9,19 +11,20 @@ type ProductCardProps = {
 };
 
 const ProductCard = ({
+  id,
   imageURL,
   title,
   category,
   price,
 }: ProductCardProps) => {
   return (
-    <div className="space-y-4">
+    <Link to={`/products/${id}`} className="space-y-4">
       <div className="group h-90 rounded-xl overflow-hidden relative flex items-end p-4">
         <div
           className={`bg-img-styling`}
           style={{ backgroundImage: `url('${imageURL}')` }}
         />
-        <CartButton className={"relative w-full hidden group-hover:block"} />
+        <CartButton className={"relative w-full hidden group-hover:flex"} />
       </div>
       <div className="space-y-2 [&>p]:text-sm">
         <p className="text-primary font-semibold">{title}</p>
@@ -31,7 +34,7 @@ const ProductCard = ({
           <p className="text-primary text-sm font-semibold">{price}</p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 export default ProductCard;

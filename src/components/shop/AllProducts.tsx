@@ -39,6 +39,7 @@ const AllProducts = () => {
           {MOCK_PRODUCTS.map((product) => (
             <ProductCard
               key={product.id}
+              id={product.id}
               imageURL={product.images[0]}
               title={product.title}
               category={product.category.name}

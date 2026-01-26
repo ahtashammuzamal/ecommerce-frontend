@@ -112,7 +112,9 @@
   }
   h1,
   h2,
-  h3 {
+  h3,
+  h4,
+  h5 {
     @apply font-playfair text-[#0b0b0b];
   }
   h1 {
@@ -123,6 +125,12 @@
   }
   h3 {
     @apply text-3xl sm:text-4xl font-medium;
+  }
+  h4 {
+    @apply text-2xl font-medium;
+  }
+  h5 {
+    @apply text-xl font-medium;
   }
 }
 

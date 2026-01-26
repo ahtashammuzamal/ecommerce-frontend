@@ -15,6 +15,7 @@ const ProductsList = () => {
         {MOCK_PRODUCTS.slice(0, 4).map((product, index) => (
           <ProductCard
             key={index}
+            id={product.id}
             imageURL={product.images[0]}
             title={product.title}
             category={product.category.name}
