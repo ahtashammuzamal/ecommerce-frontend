@@ -12,6 +12,7 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { Link } from "react-router-dom";
 
 type AuthFormProps = {
   authType: "login" | "register";
@@ -105,6 +106,20 @@ const AuthForm = ({ authType }: AuthFormProps) => {
             >
               {form.formState.isSubmitting ? "Submitting" : "Submit"}
             </Button>
+            <div className="flex items-center justify-center [&>p]:text-sm gap-2">
+              <p>
+                {authType === "login"
+                  ? "Donot have an account?"
+                  : "Already have an account?"}
+              </p>
+              <Link
+                to={authType === "login" ? "/auth/register" : "/auth/login"}
+                className="text-sm text-primary hover:underline font-medium"
+              >
+                {authType === "login" ? "Register" : "Login"}
+              </Link>
+              <Button asChild variant={"link"}></Button>
+            </div>
           </form>
         </Form>
       </div>
