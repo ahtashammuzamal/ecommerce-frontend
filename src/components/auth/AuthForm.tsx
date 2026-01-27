@@ -12,7 +12,9 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthContext } from "@/context/AuthContext";
+import { toast } from "sonner";
 
 type AuthFormProps = {
   authType: "login" | "register";
@@ -36,8 +38,21 @@ const AuthForm = ({ authType }: AuthFormProps) => {
     },
   });
 
-  const onSubmit = (data: onSubmitProps) => {
-    console.log(data);
+  const { register, login } = useAuthContext();
+  const navigate = useNavigate();
+
+  const onSubmit = async (data: onSubmitProps) => {
+    try {
+      const res =
+        authType === "register" ? await register(data) : await login(data);
+      toast.success(res.message);
+      navigate("/");
+    } catch (error) {
+      toast.error(
+        authType === "login" ? "Login Failed" : "Registration failed.",
+      );
+      console.error(error);
+    }
   };
 
   return (
@@ -104,7 +119,7 @@ const AuthForm = ({ authType }: AuthFormProps) => {
               disabled={form.formState.isSubmitting}
               className="text-center w-full"
             >
-              {form.formState.isSubmitting ? "Submitting" : "Submit"}
+              {form.formState.isSubmitting ? "Submitting..." : "Submit"}
             </Button>
             <div className="flex items-center justify-center [&>p]:text-sm gap-2">
               <p>
@@ -118,7 +133,6 @@ const AuthForm = ({ authType }: AuthFormProps) => {
               >
                 {authType === "login" ? "Register" : "Login"}
               </Link>
-              <Button asChild variant={"link"}></Button>
             </div>
           </form>
         </Form>

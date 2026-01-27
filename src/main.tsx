@@ -15,6 +15,8 @@ import AuthLayout from "./components/layout/AuthLayout.tsx";
 import Register from "./Pages/Auth/Register.tsx";
 import Login from "./Pages/Auth/Login.tsx";
 import Checkout from "./Pages/Checkout.tsx";
+import { Toaster } from "sonner";
+import { AuthProvider } from "./context/AuthProvider.tsx";
 
 const routes: RouteObject[] = [
   {
@@ -63,6 +65,9 @@ const router = createBrowserRouter(routes);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+      <Toaster />
+    </AuthProvider>
   </StrictMode>,
 );

@@ -9,15 +9,27 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { useAuthContext } from "@/context/AuthContext";
+import { toast } from "sonner";
 
 const AccountOptions = () => {
-  const isLoggedIn = true;
+  const { isAuthenticated, logout } = useAuthContext();
+
+  const handleLogout = async () => {
+    try {
+      const res = await logout();
+      toast.success(res.message);
+    } catch (error: any) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
-      {isLoggedIn ? (
+      {isAuthenticated ? (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <User size={18} className="theme-dark-text" />
+            <User size={18} className="theme-dark-text cursor-pointer" />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuGroup>
@@ -29,7 +41,7 @@ const AccountOptions = () => {
               <DropdownMenuItem asChild>
                 <Link to={"/orders"}>Orders</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>Sign Out</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>
