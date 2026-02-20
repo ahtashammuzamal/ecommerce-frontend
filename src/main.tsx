@@ -17,6 +17,8 @@ import Login from "./Pages/Auth/Login.tsx";
 import Checkout from "./Pages/Checkout.tsx";
 import { Toaster } from "sonner";
 import { AuthProvider } from "./context/AuthProvider.tsx";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "./lib/query-client.ts";
 
 const routes: RouteObject[] = [
   {
@@ -65,9 +67,11 @@ const router = createBrowserRouter(routes);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} />
-      <Toaster />
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <RouterProvider router={router} />
+        <Toaster />
+      </AuthProvider>
+    </QueryClientProvider>
   </StrictMode>,
 );

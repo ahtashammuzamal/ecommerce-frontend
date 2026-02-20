@@ -1,9 +1,9 @@
-import type { Product } from "@/types";
+import type { Product, ProductsResponse } from "@/types";
 import { api } from "./axios";
 
-type ProductFilters = {
+export type ProductFiltersType = {
   search?: string;
-  category?: string;
+  categories?: string;
   minPrice?: number;
   maxPrice?: number;
   sortBy?: "createdAt" | "price" | "title";
@@ -12,7 +12,7 @@ type ProductFilters = {
   limit?: number;
 };
 
-const cleanParams = (params: ProductFilters) => {
+const cleanParams = (params: ProductFiltersType) => {
   const entries = Object.entries(params);
 
   const filtered = entries.filter(([key, value]) => {
@@ -22,8 +22,8 @@ const cleanParams = (params: ProductFilters) => {
   return Object.fromEntries(filtered);
 };
 
-export const getAllProductsApi = (filters: ProductFilters) =>
-  api.get("/products", { params: cleanParams(filters) });
+export const getAllProductsApi = (filters: ProductFiltersType) =>
+  api.get<ProductsResponse>("/products", { params: cleanParams(filters) });
 
 export const createProductApi = (data: Product) => api.post("/products", data);
 export const updateProductApi = (data: Product) => api.patch("/products", data);

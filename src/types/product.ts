@@ -15,3 +15,13 @@ export interface Product {
   stock: number;
   category: Category;
 }
+
+export type ProductsResponse = {
+  products: Product[];
+  meta: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
+};

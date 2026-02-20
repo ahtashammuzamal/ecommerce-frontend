@@ -1,3 +1,4 @@
+import type { GetCartApiResponse } from "@/types";
 import { api } from "./axios";
 
 type UpdateCartApiData = {
@@ -5,7 +6,7 @@ type UpdateCartApiData = {
   action: "increment" | "decrement";
 };
 
-export const getUserCartApi = () => api.get("/cart");
+export const getUserCartApi = () => api.get<GetCartApiResponse>("/cart");
 
 export const addToCartApi = (productId: number) =>
   api.post(`/cart/add/:${productId}`);

@@ -1,4 +1,3 @@
-import { MOCK_PRODUCTS } from "@/mock/products";
 import { useState } from "react";
 import ProductCard from "../common/ProductCard";
 import ProductFilters from "./ProductFilters";
@@ -6,10 +5,36 @@ import IconButton from "../common/IconButton";
 import { SlidersHorizontal } from "lucide-react";
 import useWindowSize from "@/hooks/useWindowSize";
 import SearchFilter from "./SearchFilter";
+import { useQuery } from "@tanstack/react-query";
+import { queryKeys } from "@/constant/query-keys";
+import { getAllProductsApi, type ProductFiltersType } from "@/api/products.api";
+import { toast } from "sonner";
 
 const AllProducts = () => {
   const [isActive, setIsActive] = useState(false);
   const { width } = useWindowSize();
+  const [filters, setFilters] = useState<ProductFiltersType>({
+    search: "",
+    categories: "",
+    minPrice: undefined,
+    maxPrice: undefined,
+    limit: 6,
+    page: 1,
+    order: "asc",
+    sortBy: "createdAt",
+  });
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: [queryKeys.PRODUCTS, filters],
+    queryFn: () => getAllProductsApi(filters).then((res) => res.data),
+  });
+
+  if (isLoading) return <p>Loading...</p>;
+
+  if (isError)
+    return (
+      <div className="min-h-96">{toast.error("Error loading products")}</div>
+    );
 
   const filtersStyles =
     width > 1024
@@ -21,7 +46,11 @@ const AllProducts = () => {
   return (
     <div className="flex lg:flex-row flex-col py-8 gap-12">
       <div className={filtersStyles}>
-        <ProductFilters setIsActive={setIsActive} />
+        <ProductFilters
+          setIsActive={setIsActive}
+          filters={filters}
+          setFilters={setFilters}
+        />
       </div>
       <div>
         <IconButton
@@ -34,9 +63,9 @@ const AllProducts = () => {
         </IconButton>
       </div>
       <div className="lg:w-4/5 w-full space-y-4">
-        <SearchFilter />
+        <SearchFilter filters={filters} setFilters={setFilters} />
         <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6">
-          {MOCK_PRODUCTS.map((product) => (
+          {data?.products.map((product) => (
             <ProductCard
               key={product.id}
               id={product.id}
