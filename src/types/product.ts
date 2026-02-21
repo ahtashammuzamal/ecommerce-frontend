@@ -2,8 +2,8 @@ export interface Category {
   id: number;
   name: string;
   slug: string;
-  parentId?: number | null;
-  children?: Category[];
+  imageURL: string;
+  products: Product[];
 }
 
 export interface Product {
