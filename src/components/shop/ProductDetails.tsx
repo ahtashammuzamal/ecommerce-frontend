@@ -1,35 +1,31 @@
-import { MOCK_PRODUCTS } from "@/mock/products";
-import type { Product } from "@/types";
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProductImagesSlider from "./ProductImagesSlider";
 import QuantityVariable from "../common/QuantityVariable";
 import CartButton from "../common/CartButton";
+import { useQuery } from "@tanstack/react-query";
+import { queryKeys } from "@/constant/query-keys";
+import { getSingleProductApi } from "@/api/products.api";
 
 const ProductDetails = () => {
-  const [product, setProduct] = useState<Product | null>(null);
   const { id } = useParams<{ id: string }>();
 
-  useEffect(() => {
-    if (!id) return;
-    const fetchSingleProduct = async () => {
-      const foundProduct = MOCK_PRODUCTS.find(
-        (product) => product.id === Number(id),
-      );
+  const { data, isLoading } = useQuery({
+    queryKey: [queryKeys.PRODUCT, id],
+    queryFn: () => getSingleProductApi(Number(id)).then((res) => res.data),
+  });
 
-      setProduct(foundProduct ?? null);
-    };
-    fetchSingleProduct();
-  }, [id]);
+  if (isLoading) return <p>Loading ...</p>;
 
   return (
     <div className="flex flex-col md:flex-row gap-8 my-8">
-      <ProductImagesSlider imageURL={product?.images[0]} />
+      <ProductImagesSlider imageURL={data?.product.images[0]} />
       <div className="space-y-6">
-        <p className="uppercase text-sm">{product?.category.name}</p>
-        <h3>{product?.title}</h3>
-        <p className="text-2xl text-primary font-bold">${product?.price}</p>
-        <p>{product?.description}</p>
+        <p className="uppercase text-sm">{data?.product.category.name}</p>
+        <h3>{data?.product.title}</h3>
+        <p className="text-2xl text-primary font-bold">
+          ${data?.product.price}
+        </p>
+        <p>{data?.product.description}</p>
         <span className="flex items-center space-x-2">
           <div className="h-2 w-2 rounded-full bg-green-500" />
           <p className="text-primary text-sm">In Stock</p>

@@ -25,3 +25,8 @@ export type ProductsResponse = {
     totalPages: number;
   };
 };
+
+export type SingleProductResponse = {
+  message: string;
+  product: Product;
+};

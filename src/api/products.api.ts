@@ -1,4 +1,4 @@
-import type { Product, ProductsResponse } from "@/types";
+import type { Product, ProductsResponse, SingleProductResponse } from "@/types";
 import { api } from "./axios";
 
 export type ProductFiltersType = {
@@ -24,6 +24,9 @@ const cleanParams = (params: ProductFiltersType) => {
 
 export const getAllProductsApi = (filters: ProductFiltersType) =>
   api.get<ProductsResponse>("/products", { params: cleanParams(filters) });
+
+export const getSingleProductApi = (id: number) =>
+  api.get<SingleProductResponse>(`/products/${id}`);
 
 export const createProductApi = (data: Product) => api.post("/products", data);
 export const updateProductApi = (data: Product) => api.patch("/products", data);
