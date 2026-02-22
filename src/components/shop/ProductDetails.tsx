@@ -1,18 +1,23 @@
 import { useParams } from "react-router-dom";
 import ProductImagesSlider from "./ProductImagesSlider";
-import QuantityVariable from "../common/QuantityVariable";
 import CartButton from "../common/CartButton";
 import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constant/query-keys";
 import { getSingleProductApi } from "@/api/products.api";
+import ProductQuantityVariable from "./ProductQuantityVariable";
+import { useState } from "react";
+import { useAddToCart } from "@/hooks/cart/useAddToCart";
 
 const ProductDetails = () => {
   const { id } = useParams<{ id: string }>();
+  const [quantity, setQuantity] = useState(1);
 
   const { data, isLoading } = useQuery({
     queryKey: [queryKeys.PRODUCT, id],
     queryFn: () => getSingleProductApi(Number(id)).then((res) => res.data),
   });
+
+  const { mutate, isPending } = useAddToCart();
 
   if (isLoading) return <p>Loading ...</p>;
 
@@ -31,8 +36,15 @@ const ProductDetails = () => {
           <p className="text-primary text-sm">In Stock</p>
         </span>
         <div className="flex sm:flex-row flex-col gap-4 ">
-          <QuantityVariable />
-          <CartButton className="w-auto rounded " />
+          <ProductQuantityVariable
+            quantity={quantity}
+            setQuantity={setQuantity}
+          />
+          <CartButton
+            className="w-auto rounded"
+            isPending={isPending}
+            onClick={() => mutate({ productId: Number(id), quantity })}
+          />
         </div>
       </div>
     </div>

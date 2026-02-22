@@ -12,6 +12,8 @@ export interface Cart {
 }
 
 export type GetCartApiResponse = {
+  sucess: boolean;
+  totalCartItems: number;
   cart: {
     id: number;
     userId: number;
@@ -19,5 +21,4 @@ export type GetCartApiResponse = {
     createdAt: string;
     updatedAt: string;
   };
-  sucess: boolean
 };

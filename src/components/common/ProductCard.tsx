@@ -1,6 +1,7 @@
 import { DollarSign } from "lucide-react";
 import CartButton from "./CartButton";
 import { Link } from "react-router-dom";
+import { useAddToCart } from "@/hooks/cart/useAddToCart";
 
 type ProductCardProps = {
   id: number;
@@ -17,6 +18,19 @@ const ProductCard = ({
   category,
   price,
 }: ProductCardProps) => {
+  const { mutate, isPending } = useAddToCart();
+
+  const handleAddToCard = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    try {
+      mutate({ productId: id, quantity: 1 });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <Link to={`/products/${id}`} className="space-y-4">
       <div className="group h-90 rounded-xl overflow-hidden relative flex items-end p-4">
@@ -24,7 +38,11 @@ const ProductCard = ({
           className={`bg-img-styling`}
           style={{ backgroundImage: `url('${imageURL}')` }}
         />
-        <CartButton className={"relative w-full hidden group-hover:flex"} />
+        <CartButton
+          className={"relative w-full hidden group-hover:flex"}
+          onClick={handleAddToCard}
+          isPending={isPending}
+        />
       </div>
       <div className="space-y-2 [&>p]:text-sm">
         <p className="text-primary font-semibold">{title}</p>
