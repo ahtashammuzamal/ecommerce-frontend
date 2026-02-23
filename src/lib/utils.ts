@@ -13,3 +13,10 @@ export function calculateSubtotal(cartItems: CartItem[] | undefined) {
   );
   return subtotal;
 }
+
+export function truncateTitle(title: string, limit: number) {
+  if (title.length > limit) {
+    return title.slice(0, limit) + "...";
+  }
+  return title;
+}

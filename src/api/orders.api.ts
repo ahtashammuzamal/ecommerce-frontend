@@ -1,7 +1,11 @@
 import type { ORDER_STATUS, ShippingAddress } from "@/types";
 import { api } from "./axios";
 
-export const createOrderApi = (data: ShippingAddress) =>
+type CreateOrderRequest = {
+  shippingAddress: ShippingAddress;
+};
+
+export const createOrderApi = (data: CreateOrderRequest) =>
   api.post("/orders/create", data);
 
 export const getUserOrdersApi = () => api.get("/orders");

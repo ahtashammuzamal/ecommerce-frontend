@@ -13,15 +13,44 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { checkoutSchema } from "@/schemas/checkoutSchema";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { createOrderApi } from "@/api/orders.api";
+import type { ShippingAddress } from "@/types";
+import { useClearCart } from "@/hooks/cart/useClearCart";
+import { useNavigate } from "react-router-dom";
 
-const CheckoutForm = ({className}) => {
+type CheckoutFormProps = {
+  className: string;
+};
+
+const CheckoutForm = ({ className }: CheckoutFormProps) => {
   const form = useForm({
     resolver: zodResolver(checkoutSchema),
-    defaultValues: {},
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      address: "",
+      appartment: "",
+      city: "",
+      state: "",
+      zipCode: "",
+      phone: "",
+    },
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const { mutate } = useClearCart();
+
+  const navigate = useNavigate();
+
+  const onSubmit = async (data: ShippingAddress) => {
+    try {
+      await createOrderApi({ shippingAddress: data });
+      navigate("/checkout/success");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      mutate();
+      form.reset();
+    }
   };
 
   return (
@@ -142,7 +171,14 @@ const CheckoutForm = ({className}) => {
               </FormItem>
             )}
           />
-          <Button className="w-full rounded">Complete Order</Button>
+          <Button
+            className="w-full rounded"
+            disabled={form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting
+              ? "Creating Order ..."
+              : "Complete Order"}
+          </Button>
         </form>
       </Form>
     </div>

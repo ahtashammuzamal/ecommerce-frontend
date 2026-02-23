@@ -19,6 +19,7 @@ import { Toaster } from "sonner";
 import { AuthProvider } from "./context/AuthProvider.tsx";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/query-client.ts";
+import CheckoutSuccess from "./Pages/CheckoutSuccess.tsx";
 
 const routes: RouteObject[] = [
   {
@@ -46,6 +47,10 @@ const routes: RouteObject[] = [
   {
     path: "/checkout",
     element: <Checkout />,
+  },
+  {
+    path: "/checkout/success",
+    element: <CheckoutSuccess />,
   },
   {
     path: "/auth",
