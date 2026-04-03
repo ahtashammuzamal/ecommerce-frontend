@@ -1,6 +1,6 @@
 type PageHeaderProps = {
   title: string;
-  description: string;
+  description?: string;
 };
 
 const PageHeader = ({ title, description }: PageHeaderProps) => {

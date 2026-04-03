@@ -20,3 +20,12 @@ export function truncateTitle(title: string, limit: number) {
   }
   return title;
 }
+
+export function organizeDate(date: string) {
+  const d = new Date(date);
+  const day = d.getUTCDate();
+  const month = d.toLocaleString("default", { month: "short" });
+  const year = d.getUTCFullYear();
+
+  return `${day} ${month} ${year}`;
+}

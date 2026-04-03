@@ -20,6 +20,9 @@ import { AuthProvider } from "./context/AuthProvider.tsx";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/query-client.ts";
 import CheckoutSuccess from "./Pages/CheckoutSuccess.tsx";
+import AccountLayout from "./components/layout/AccountLayout.tsx";
+import Orders from "./components/account/Orders.tsx";
+import Settings from "./components/account/Settings.tsx";
 
 const routes: RouteObject[] = [
   {
@@ -63,6 +66,20 @@ const routes: RouteObject[] = [
       {
         path: "login",
         element: <Login />,
+      },
+    ],
+  },
+  {
+    path: "/account",
+    element: <AccountLayout />,
+    children: [
+      {
+        path: "orders",
+        element: <Orders />,
+      },
+      {
+        path: "settings",
+        element: <Settings/>,
       },
     ],
   },

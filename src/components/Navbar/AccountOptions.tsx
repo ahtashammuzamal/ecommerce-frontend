@@ -36,10 +36,10 @@ const AccountOptions = () => {
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
-                <Link to={"/profile"}>Profile</Link>
+                <Link to={"/account/settings"}>Profile</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link to={"/orders"}>Orders</Link>
+                <Link to={"/account/orders"}>Orders</Link>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
             </DropdownMenuGroup>

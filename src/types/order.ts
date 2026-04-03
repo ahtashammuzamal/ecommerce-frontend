@@ -2,9 +2,10 @@ import type { Product } from "./product";
 
 export interface OrderItem {
   id: number;
+  orderId: number;
   product: Product;
   quantity: string;
-  subtotal: number;
+  subTotal: number;
 }
 
 export interface ShippingAddress {
@@ -17,10 +18,18 @@ export interface ShippingAddress {
   phone: number;
 }
 
+export type OrderStatus =
+  | "PENDING"
+  | "PAID"
+  | "SHIPPED"
+  | "DELIVERED"
+  | "CANCELLED";
+
 export interface Order {
   id: number;
+  userId: number;
   total: number;
-  status: boolean;
+  status: OrderStatus;
   shippingAddress: ShippingAddress;
   orderItems: OrderItem[];
   createdAt: string;
