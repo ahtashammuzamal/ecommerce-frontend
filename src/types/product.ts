@@ -7,13 +7,14 @@ export interface Category {
 }
 
 export interface Product {
-  id: number;
+  id?: number;
   title: string;
   description: string;
   price: number;
   images: string[];
   stock: number;
-  category: Category;
+  categoryId: number;
+  category?: Category;
 }
 
 export type ProductsResponse = {

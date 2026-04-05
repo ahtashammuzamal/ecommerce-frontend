@@ -18,7 +18,7 @@ const AllProducts = () => {
     categories: "",
     minPrice: undefined,
     maxPrice: undefined,
-    limit: 6,
+    limit: 20,
     page: 1,
     order: "asc",
     sortBy: "createdAt",

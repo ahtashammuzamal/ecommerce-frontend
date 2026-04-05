@@ -23,6 +23,10 @@ import CheckoutSuccess from "./Pages/CheckoutSuccess.tsx";
 import AccountLayout from "./components/layout/AccountLayout.tsx";
 import Orders from "./components/account/Orders.tsx";
 import Settings from "./components/account/Settings.tsx";
+import Dashboard from "./Pages/admin/Dashboard.tsx";
+import { AdminLayout } from "./components/layout/AdminLayout.tsx";
+import ProductsManagement from "./Pages/admin/ProductsManagement.tsx";
+import OrdersManagement from "./Pages/admin/OrdersManagement.tsx";
 
 const routes: RouteObject[] = [
   {
@@ -79,7 +83,25 @@ const routes: RouteObject[] = [
       },
       {
         path: "settings",
-        element: <Settings/>,
+        element: <Settings />,
+      },
+    ],
+  },
+  {
+    path: "/admin",
+    element: <AdminLayout />,
+    children: [
+      {
+        index: true,
+        element: <Dashboard />,
+      },
+      {
+        path: "products",
+        element: <ProductsManagement />,
+      },
+      {
+        path: "orders",
+        element: <OrdersManagement />,
       },
     ],
   },

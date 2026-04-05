@@ -28,6 +28,7 @@ export const getAllProductsApi = (filters: ProductFiltersType) =>
 export const getSingleProductApi = (id: number) =>
   api.get<SingleProductResponse>(`/products/${id}`);
 
-export const createProductApi = (data: Product) => api.post("/products", data);
+export const createProductApi = (data: Product) =>
+  api.post("/products/create", data);
 export const updateProductApi = (data: Product) => api.patch("/products", data);
 export const deleteProductApi = (id: number) => api.delete(`/products/${id}`);
