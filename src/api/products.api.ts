@@ -30,5 +30,8 @@ export const getSingleProductApi = (id: number) =>
 
 export const createProductApi = (data: Product) =>
   api.post("/products/create", data);
-export const updateProductApi = (data: Product) => api.patch("/products", data);
+
+export const updateProductApi = (id: number, data: Product) =>
+  api.patch<{ message: string; product: Product }>(`/products/${id}`, data);
+
 export const deleteProductApi = (id: number) => api.delete(`/products/${id}`);

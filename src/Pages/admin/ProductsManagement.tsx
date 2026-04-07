@@ -4,9 +4,16 @@ import IconButton from "@/components/common/IconButton";
 import { Plus } from "lucide-react";
 import ProductForm from "./ProductForm";
 import { useState } from "react";
+import type { Product } from "@/types";
 
 const ProductsManagement = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [product, setProduct] = useState<Product | null>(null);
+
+  const handleAddProduct = () => {
+    setProduct(null);
+    setIsOpen(true);
+  };
 
   return (
     <>
@@ -15,13 +22,13 @@ const ProductsManagement = () => {
           title="Products"
           description="Manage your product catalog."
         />
-        <IconButton onClick={() => setIsOpen(true)} className="cursor-pointer">
+        <IconButton onClick={handleAddProduct} className="cursor-pointer">
           <Plus />
           Add Product
         </IconButton>
       </div>
-      <ProductsTable isOpen={isOpen} setIsOpen={setIsOpen}/>
-      <ProductForm isOpen={isOpen} setIsOpen={setIsOpen} />
+      <ProductsTable setIsOpen={setIsOpen} setProduct={setProduct} />
+      <ProductForm isOpen={isOpen} setIsOpen={setIsOpen} product={product} />
     </>
   );
 };

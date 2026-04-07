@@ -20,7 +20,7 @@ const AllProducts = () => {
     maxPrice: undefined,
     limit: 20,
     page: 1,
-    order: "asc",
+    order: "desc",
     sortBy: "createdAt",
   });
 

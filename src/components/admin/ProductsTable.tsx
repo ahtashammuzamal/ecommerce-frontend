@@ -1,25 +1,30 @@
 import { getAllProductsApi } from "@/api/products.api";
 import { queryKeys } from "@/constant/query-keys";
 import { truncateTitle } from "@/lib/utils";
+import type { Product } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 import { Edit, Trash2 } from "lucide-react";
 
 const ProductsTable = ({
-  isOpen,
   setIsOpen,
+  setProduct,
 }: {
-  isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setProduct: React.Dispatch<React.SetStateAction<Product | null>>;
 }) => {
   const { data, isLoading } = useQuery({
     queryKey: [queryKeys.PRODUCTS],
     queryFn: () =>
-      getAllProductsApi({ order: "asc", limit: 100 }).then((res) => res.data),
+      getAllProductsApi({ order: "desc", limit: 100 }).then((res) => res.data),
   });
 
-  const handleUpdateProduct = (id: number | undefined) => {
-    setIsOpen(true);
-    
+  const handleUpdateProduct = async (id: number | undefined) => {
+    const product = data?.products.find((product) => product.id === id);
+
+    if (product) {
+      setProduct(product);
+      setIsOpen(true);
+    }
   };
 
   if (isLoading) return <p>Loading</p>;

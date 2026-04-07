@@ -5,10 +5,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 const useUpdateProduct = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: updateProductApi,
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries([queryKeys.PRODUCT]);
-      queryClient.invalidateQueries([queryKeys.PRODUCTS, variables.id]);
+    mutationFn: ({ id, data }: { id: number; data: any }) =>
+      updateProductApi(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [queryKeys.PRODUCT] });
+      queryClient.invalidateQueries({ queryKey: [queryKeys.PRODUCTS] });
     },
   });
 };
