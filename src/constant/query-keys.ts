@@ -5,4 +5,5 @@ export const queryKeys = {
   CART_ITEMS: "cart-items",
   CART_ITEM: "cart-item",
   CATEGORIES: "categories",
+  ORDERS: 'orders'
 };

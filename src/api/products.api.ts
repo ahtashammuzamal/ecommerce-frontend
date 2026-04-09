@@ -34,4 +34,4 @@ export const createProductApi = (data: Product) =>
 export const updateProductApi = (id: number, data: Product) =>
   api.patch<{ message: string; product: Product }>(`/products/${id}`, data);
 
-export const deleteProductApi = (id: number) => api.delete(`/products/${id}`);
+export const deleteProductApi = (id: number ) => api.delete(`/products/${id}`);

@@ -131,6 +131,7 @@ const ProductForm = ({
         return;
       }
 
+
       try {
         updateMutate(
           { id: product.id, data: formData },
@@ -288,7 +289,7 @@ const ProductForm = ({
                 >
                   Cancel
                 </Button>
-                <Button className="flex-1" type="submit">
+                <Button className="flex-1" type="submit" >
                   {createIsPending
                     ? "Creating..."
                     : updateIsPending
