@@ -53,7 +53,7 @@ const ProductDetails = () => {
           <h3>{product?.title}</h3>
           <p className="text-2xl text-primary font-bold">${product?.price}</p>
           <p>{product?.description}</p>
-          <StockDisplayer stock={product?.stock} />
+          <StockDisplayer stock={product?.stock || 0} />
           <div className="flex sm:flex-row flex-col gap-4 ">
             <ProductQuantityVariable
               quantity={quantity}
@@ -61,8 +61,8 @@ const ProductDetails = () => {
             />
             <CartButton
               className={`w-auto rounded`}
-              disabled={product?.stock === 0}
-              productId={product?.id}
+              disabled={!product || product?.stock === 0}
+              productId={product?.id || 0}
               quantity={quantity}
             />
           </div>

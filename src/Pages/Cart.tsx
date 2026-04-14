@@ -15,7 +15,7 @@ const Cart = () => {
         description={`${isAuthenticated ? data?.totalCartItems : "0"} items`}
       />
       <UserCart
-        cartItems={data?.cart?.cartItems}
+        cartItems={data?.cart?.cartItems || []}
         subTotal={calculateSubtotal(data?.cart?.cartItems)}
         totalCartItems={data?.totalCartItems}
       />

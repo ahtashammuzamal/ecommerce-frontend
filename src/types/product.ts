@@ -1,3 +1,5 @@
+import type { User } from "./user";
+
 export interface Category {
   id: number;
   name: string;
@@ -31,3 +33,8 @@ export type SingleProductResponse = {
   message: string;
   product: Product;
 };
+
+export type GetProileApiResponse = {
+  message: string;
+  user: User
+}

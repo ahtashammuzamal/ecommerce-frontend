@@ -32,7 +32,7 @@ const AuthForm = ({ authType }: AuthFormProps) => {
       authType === "register" ? registerSchema : loginSchema,
     ),
     defaultValues: {
-      ...(authType === "register" && { name: "" }),
+      name: "",
       email: "",
       password: "",
     },

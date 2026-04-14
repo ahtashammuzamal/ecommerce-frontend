@@ -14,7 +14,6 @@ import { checkoutSchema } from "@/schemas/checkoutSchema";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { createOrderApi } from "@/api/orders.api";
-import type { ShippingAddress } from "@/types";
 import { useClearCart } from "@/hooks/cart/useClearCart";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -47,7 +46,7 @@ const CheckoutForm = ({ className }: CheckoutFormProps) => {
 
   const navigate = useNavigate();
 
-  const onSubmit = async (data: ShippingAddress) => {
+  const onSubmit = async (data: any) => {
     try {
       setIsProcessing(true);
 

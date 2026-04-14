@@ -15,7 +15,7 @@ export type ProductFiltersType = {
 const cleanParams = (params: ProductFiltersType) => {
   const entries = Object.entries(params);
 
-  const filtered = entries.filter(([key, value]) => {
+  const filtered = entries.filter(([_, value]) => {
     return value !== undefined && value !== "";
   });
 
@@ -28,10 +28,10 @@ export const getAllProductsApi = (filters: ProductFiltersType) =>
 export const getSingleProductApi = (id: number) =>
   api.get<SingleProductResponse>(`/products/${id}`);
 
-export const createProductApi = (data: Product) =>
+export const createProductApi = (data: FormData) =>
   api.post("/products/create", data);
 
-export const updateProductApi = (id: number, data: Product) =>
+export const updateProductApi = (id: number, data: FormData) =>
   api.patch<{ message: string; product: Product }>(`/products/${id}`, data);
 
 export const deleteProductApi = (id: number) => api.delete(`/products/${id}`);

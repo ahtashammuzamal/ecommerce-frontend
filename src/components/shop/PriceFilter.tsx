@@ -3,7 +3,7 @@ import { Slider } from "../ui/slider";
 import type { ProductFiltersProps } from "./ProductFilters";
 
 const MIN_LIMIT = 0;
-const MAX_LIMIT = 50000;
+const MAX_LIMIT = 1000;
 
 const PriceFilter = ({ filters, setFilters }: ProductFiltersProps) => {
   const handlePriceChange = (value: number[]) => {
@@ -29,8 +29,8 @@ const PriceFilter = ({ filters, setFilters }: ProductFiltersProps) => {
           className="cursor-pointer"
           value={[min, max]}
           onValueChange={handlePriceChange}
-          min={0}
-          max={50000}
+          min={MIN_LIMIT}
+          max={MAX_LIMIT}
           step={100}
         />
         <div className="flex justify-between">
