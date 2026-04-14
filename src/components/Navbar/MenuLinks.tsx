@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 const menuLinks = [
-  { name: "Shop App", url: "/products" },
+  { name: "Shop All", url: "/products" },
   { name: "Living Room", url: "/products" },
   { name: "Bedroom", url: "/products" },
   { name: "Kitchen", url: "/products" },

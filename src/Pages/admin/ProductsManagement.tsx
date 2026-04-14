@@ -28,7 +28,7 @@ const ProductsManagement = () => {
         </IconButton>
       </div>
       <ProductsTable setIsOpen={setIsOpen} setProduct={setProduct} />
-      <ProductForm isOpen={isOpen} setIsOpen={setIsOpen} product={product} />
+      <ProductForm isOpen={isOpen} setIsOpen={setIsOpen} product={product} setProduct={setProduct}/>
     </>
   );
 };

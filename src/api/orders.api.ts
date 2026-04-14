@@ -20,10 +20,15 @@ type UpdateOrderStatusResponse = {
   order: Order;
 };
 
-export const createOrderApi = (data: CreateOrderRequest) =>
-  api.post("/orders/create", data);
+type CreateOrderApiResponse = {
+  message: string;
+  order: Order;
+};
 
-export const getUserOrdersApi = () => api.get<Order[]>("/orders");
+export const createOrderApi = (data: CreateOrderRequest) =>
+  api.post<CreateOrderApiResponse>("/orders/create", data);
+
+export const getUserOrdersApi = () => api.get<{ orders: Order[] }>("/orders");
 
 export const updateOrderStatus = (
   orderId: number,
@@ -31,3 +36,6 @@ export const updateOrderStatus = (
 ) => api.patch<UpdateOrderStatusResponse>(`/orders/${orderId}/status`, data);
 
 export const getAllOrders = () => api.get<GetAllOrdersResponse>("/orders/all");
+
+export const cancelUserOrder = (orderId: number) =>
+  api.patch(`/orders/${orderId}/cancel`);

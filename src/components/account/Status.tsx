@@ -6,7 +6,7 @@ const Status = ({ status }: { status: OrderStatus }) => {
   const Icon = config.icon;
   return (
     <div
-      className={`flex items-center justify-center gap-2  rounded-2xl px-4 ${config.className}`}
+      className={`flex items-center justify-center gap-2  rounded-2xl px-3 ${config.className} text-sm`}
     >
       <Icon size={16} /> {config.label}
     </div>

@@ -14,9 +14,9 @@ const CategoryCard = ({ name, imageURL, totalProducts }: CategoryCardProps) => {
           className="bg-img-styling"
           style={{ backgroundImage: `url(${imageURL})` }}
         />
-        <div className="absolute inset-0 h-full w-full bg-black/30" />
+        <div className="absolute inset-0 h-full w-full bg-black/40" />
         <div className="space-y-1 text-primary-foreground relative z-10">
-          <h4 className="text-xl font-semibold">{name}</h4>
+          <h4 className="text-xl font-semibold text-primary-foreground">{name}</h4>
           <p className="text-sm text-secondary">{totalProducts} products</p>
         </div>
       </div>

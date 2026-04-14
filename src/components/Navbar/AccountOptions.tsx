@@ -13,7 +13,7 @@ import { useAuthContext } from "@/context/AuthContext";
 import { toast } from "sonner";
 
 const AccountOptions = () => {
-  const { isAuthenticated, logout } = useAuthContext();
+  const { isAuthenticated, logout, user } = useAuthContext();
 
   const handleLogout = async () => {
     try {
@@ -41,6 +41,11 @@ const AccountOptions = () => {
               <DropdownMenuItem asChild>
                 <Link to={"/account/orders"}>Orders</Link>
               </DropdownMenuItem>
+              {user?.role === "ADMIN" && (
+                <DropdownMenuItem asChild>
+                  <Link to={"/admin/orders"}>Dashboard</Link>
+                </DropdownMenuItem>
+              )}
               <DropdownMenuItem onClick={handleLogout}>Logout</DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>

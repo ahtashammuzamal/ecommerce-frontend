@@ -5,6 +5,8 @@ import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constant/query-keys";
 import { toast } from "sonner";
 import type { Category } from "@/types";
+import StateHandler from "../common/StateHandler";
+import { useEffect } from "react";
 
 const CategoryFilter = ({ filters, setFilters }: ProductFiltersProps) => {
   const { data, isLoading, isError } = useQuery({
@@ -12,9 +14,11 @@ const CategoryFilter = ({ filters, setFilters }: ProductFiltersProps) => {
     queryFn: () => getCategoriesApi().then((res) => res.data),
   });
 
-  if (isLoading) return <p>Loading ...</p>;
-
-  if (isError) return toast.error("Error loading categories");
+  useEffect(() => {
+    if (isError) {
+      toast.error("Error loading category filters");
+    }
+  }, []);
 
   const selectedCategories = filters.categories
     ? filters.categories.split(",")
@@ -37,19 +41,25 @@ const CategoryFilter = ({ filters, setFilters }: ProductFiltersProps) => {
     <div className="space-y-3">
       <p className="text-primary text-sm font-medium">Category</p>
       <div className="space-y-1">
-        {data?.categories.map((category: Category) => (
-          <span key={category.id} className="flex items-center gap-2">
-            <Input
-              type="checkbox"
-              name={category.slug}
-              id={category.slug}
-              className="w-4 h-4"
-              checked={selectedCategories.includes(category.slug)}
-              onChange={handleCategoryFilter}
-            />
-            <label htmlFor={category.slug}>{category.name}</label>
-          </span>
-        ))}
+        <StateHandler
+          isLoading={isLoading}
+          isError={isError}
+          isEmpty={!data?.categories.length}
+        >
+          {data?.categories.map((category: Category) => (
+            <span key={category.id} className="flex items-center gap-2">
+              <Input
+                type="checkbox"
+                name={category.slug}
+                id={category.slug}
+                className="w-4 h-4"
+                checked={selectedCategories.includes(category.slug)}
+                onChange={handleCategoryFilter}
+              />
+              <label htmlFor={category.slug}>{category.name}</label>
+            </span>
+          ))}
+        </StateHandler>
       </div>
     </div>
   );

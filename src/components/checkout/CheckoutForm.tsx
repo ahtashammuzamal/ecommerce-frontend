@@ -1,4 +1,4 @@
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, CircleDot } from "lucide-react";
 import IconButton from "../common/IconButton";
 import {
   Form,
@@ -16,13 +16,17 @@ import { Button } from "../ui/button";
 import { createOrderApi } from "@/api/orders.api";
 import type { ShippingAddress } from "@/types";
 import { useClearCart } from "@/hooks/cart/useClearCart";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useCart } from "@/hooks/cart/useCart";
 
 type CheckoutFormProps = {
   className: string;
 };
 
 const CheckoutForm = ({ className }: CheckoutFormProps) => {
+  const { data } = useCart();
+
   const form = useForm({
     resolver: zodResolver(checkoutSchema),
     defaultValues: {
@@ -37,14 +41,19 @@ const CheckoutForm = ({ className }: CheckoutFormProps) => {
     },
   });
 
+  const [isProcessing, setIsProcessing] = useState(false);
+
   const { mutate } = useClearCart();
 
   const navigate = useNavigate();
 
   const onSubmit = async (data: ShippingAddress) => {
     try {
-      await createOrderApi({ shippingAddress: data });
-      navigate("/checkout/success");
+      setIsProcessing(true);
+
+      const { data: res } = await createOrderApi({ shippingAddress: data });
+      setTimeout(() => setIsProcessing(false), 1500);
+      navigate(`/checkout/success/${res.order.id}`);
     } catch (error) {
       console.error(error);
     } finally {
@@ -53,13 +62,15 @@ const CheckoutForm = ({ className }: CheckoutFormProps) => {
     }
   };
 
+  if (data?.totalCartItems === 0) return <Navigate to={"/cart"} />;
+
   return (
     <div className={className}>
       <IconButton variant={"link"} to="/cart">
         <ArrowLeft />
         Back to cart
       </IconButton>
-      <h3>Checkout</h3>
+      <h3 className="mb-4">Checkout</h3>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <h4>Shipping Address</h4>
@@ -171,13 +182,17 @@ const CheckoutForm = ({ className }: CheckoutFormProps) => {
               </FormItem>
             )}
           />
-          <Button
-            className="w-full rounded"
-            disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting
-              ? "Creating Order ..."
-              : "Complete Order"}
+          <div>
+            <h5>Shipping Method</h5>
+            <div className="bg-white p-4 rounded-sm mt-2 flex gap-4 items-center">
+              <CircleDot size={15} className="text-primary" />
+              <p className="text-sm">
+                Cash On Delivery (Other methods coming soon)
+              </p>
+            </div>
+          </div>
+          <Button className="w-full rounded" disabled={isProcessing}>
+            {isProcessing ? "Processing ..." : "Complete Order"}
           </Button>
         </form>
       </Form>

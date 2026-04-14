@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useEffect, useState, type SetStateAction } from "react";
 import ProductCard from "../common/ProductCard";
 import ProductFilters from "./ProductFilters";
 import IconButton from "../common/IconButton";
@@ -9,10 +9,16 @@ import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constant/query-keys";
 import { getAllProductsApi, type ProductFiltersType } from "@/api/products.api";
 import { toast } from "sonner";
+import StateHandler from "../common/StateHandler";
 
-const AllProducts = () => {
+const AllProducts = ({
+  setTotalProducts,
+}: {
+  setTotalProducts: React.Dispatch<SetStateAction<number | undefined>>;
+}) => {
   const [isActive, setIsActive] = useState(false);
   const { width } = useWindowSize();
+
   const [filters, setFilters] = useState<ProductFiltersType>({
     search: "",
     categories: "",
@@ -27,14 +33,20 @@ const AllProducts = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: [queryKeys.PRODUCTS, filters],
     queryFn: () => getAllProductsApi(filters).then((res) => res.data),
+    placeholderData: (prev) => prev,
   });
 
-  if (isLoading) return <p>Loading...</p>;
+  useEffect(() => {
+    if (data?.products) {
+      setTotalProducts(data.products.length);
+    }
+  });
 
-  if (isError)
-    return (
-      <div className="min-h-96">{toast.error("Error loading products")}</div>
-    );
+  useEffect(() => {
+    if (isError) {
+      toast.error("Error loading products");
+    }
+  }, [isError]);
 
   const filtersStyles =
     width > 1024
@@ -65,16 +77,23 @@ const AllProducts = () => {
       <div className="lg:w-4/5 w-full space-y-4">
         <SearchFilter filters={filters} setFilters={setFilters} />
         <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6">
-          {data?.products.map((product) => (
-            <ProductCard
-              key={product.id}
-              id={product.id}
-              imageURL={product.images[0]}
-              title={product.title}
-              category={product.category.name}
-              price={product.price}
-            />
-          ))}
+          <StateHandler
+            isLoading={isLoading}
+            isError={isError}
+            isEmpty={!data?.products.length}
+          >
+            {data?.products.map((product) => (
+              <ProductCard
+                key={product.id}
+                id={product.id}
+                imageURL={product.images[0]}
+                title={product.title}
+                categoryName={product.category?.name}
+                price={product.price}
+                stock={product.stock}
+              />
+            ))}
+          </StateHandler>
         </div>
       </div>
     </div>

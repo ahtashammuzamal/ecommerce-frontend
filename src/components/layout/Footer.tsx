@@ -40,7 +40,7 @@ const Footer = () => {
                 {link.title}
               </p>
               {link.items.map((item, index) => (
-                <Link key={index} to={`/${item}`} className="block">
+                <Link key={index} to={""} className="block">
                   {item}
                 </Link>
               ))}

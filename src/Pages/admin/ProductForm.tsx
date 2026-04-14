@@ -33,10 +33,12 @@ const ProductForm = ({
   isOpen,
   setIsOpen,
   product,
+  setProduct,
 }: {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   product: Product | null;
+  setProduct: React.Dispatch<React.SetStateAction<Product | null>>;
 }) => {
   const formType = product ? "update" : "create";
 
@@ -68,6 +70,7 @@ const ProductForm = ({
   }, []);
 
   useEffect(() => {
+    if (!categories) return; 
     if (product) {
       form.reset({
         title: product.title,
@@ -77,8 +80,17 @@ const ProductForm = ({
         stock: product.stock,
         categoryId: product.categoryId,
       });
+    } else {
+      form.reset({
+        title: "",
+        description: "",
+        images: [],
+        price: 0,
+        stock: 0,
+        categoryId: undefined,
+      });
     }
-  }, [product, form]);
+  }, [product, form, categories]);
 
   const onSubmit = async (data: any) => {
     const formData = new FormData();
@@ -98,6 +110,7 @@ const ProductForm = ({
         createMutate(formData, {
           onSuccess: () => {
             form.reset();
+            setProduct(null);
             setIsOpen(false);
             toast.success("Product successfully created");
           },
@@ -131,7 +144,6 @@ const ProductForm = ({
         return;
       }
 
-
       try {
         updateMutate(
           { id: product.id, data: formData },
@@ -162,7 +174,13 @@ const ProductForm = ({
         <div className="bg-primary-foreground w-1/4 p-4 rounded-sm space-y-6">
           <div className="flex items-center justify-between border-b border-primary/10 pb-6">
             <h5>{formType === "create" ? "Add Product" : "Edit Product"}</h5>
-            <X onClick={() => setIsOpen(false)} className="cursor-pointer" />
+            <X
+              onClick={() => {
+                setProduct(null);
+                setIsOpen(false);
+              }}
+              className="cursor-pointer"
+            />
           </div>
           <Form {...form}>
             <form
@@ -244,20 +262,17 @@ const ProductForm = ({
                   <FormItem>
                     <FormLabel>Category</FormLabel>
                     <Select
-                      onValueChange={field.onChange}
-                      value={field.value?.toString() || ""}
+                      key={product?.id ?? "new"}
+                      onValueChange={(value) => field.onChange(Number(value))}
+                      value={field.value ? field.value.toString() : undefined}
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue
-                            placeholder={
-                              product?.category?.name || `Select category`
-                            }
-                          />
+                          <SelectValue placeholder="Select category" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {categories && categories?.length > 0 ? (
+                        {categories?.length ? (
                           categories?.map((category) => (
                             <SelectItem
                               key={category.id}
@@ -273,6 +288,7 @@ const ProductForm = ({
                         )}
                       </SelectContent>
                     </Select>
+
                     <FormMessage />
                   </FormItem>
                 )}
@@ -289,7 +305,11 @@ const ProductForm = ({
                 >
                   Cancel
                 </Button>
-                <Button className="flex-1" type="submit" >
+                <Button
+                  className="flex-1"
+                  type="submit"
+                  disabled={formType === "update" && !form.formState.isDirty}
+                >
                   {createIsPending
                     ? "Creating..."
                     : updateIsPending

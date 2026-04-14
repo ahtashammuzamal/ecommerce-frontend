@@ -10,7 +10,7 @@ export const productSchema = z.object({
   price: z.coerce.number().min(0.01, "Price must be greater than 0"),
   stock: z.coerce.number().min(0, "Stock cannot be negative"),
   categoryId: z.coerce
-    .number({ invalid_type_error: "Please select a category" })
+    .number({ invalid_type_error: "" })
     .int()
     .positive("Please select a category"),
 });

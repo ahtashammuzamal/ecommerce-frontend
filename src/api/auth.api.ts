@@ -10,3 +10,8 @@ export const loginApi = (data: AuthPayload) =>
 export const getProfileApi = () => api.get<User>("/auth/my-profile");
 
 export const logoutApi = () => api.post<LogoutResponse>("/auth/logout");
+
+export const changeUserPassword = (data: {
+  currentPassword: string;
+  newPassword: string;
+}) => api.post("/auth/change-password", data);

@@ -8,10 +8,12 @@ import { getToken, removeToken, setToken } from "@/lib/token";
 import type { AuthPayload, AuthResponse, User } from "@/types";
 import { useEffect, useState, type ReactNode } from "react";
 import { AuthContext } from "./AuthContext";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const queryClient = useQueryClient();
 
   const isAuthenticated = !!user;
 
@@ -70,6 +72,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } finally {
       removeToken();
       setUser(null);
+      queryClient.clear();
     }
   };
 

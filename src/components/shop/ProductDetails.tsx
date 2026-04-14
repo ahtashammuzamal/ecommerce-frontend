@@ -5,49 +5,70 @@ import { useQuery } from "@tanstack/react-query";
 import { queryKeys } from "@/constant/query-keys";
 import { getSingleProductApi } from "@/api/products.api";
 import ProductQuantityVariable from "./ProductQuantityVariable";
-import { useState } from "react";
-import { useAddToCart } from "@/hooks/cart/useAddToCart";
+import { useEffect, useState } from "react";
+import StateHandler from "../common/StateHandler";
+import StockDisplayer from "../common/StockDisplayer";
+import { Spinner } from "../ui/spinner";
+import { toast } from "sonner";
 
 const ProductDetails = () => {
   const { id } = useParams<{ id: string }>();
   const [quantity, setQuantity] = useState(1);
 
-  const { data, isLoading } = useQuery({
+  const {
+    data: product,
+    isError,
+    isLoading,
+  } = useQuery({
     queryKey: [queryKeys.PRODUCT, id],
-    queryFn: () => getSingleProductApi(Number(id)).then((res) => res.data),
+    queryFn: () =>
+      getSingleProductApi(Number(id)).then((res) => res.data.product),
   });
 
-  const { mutate, isPending } = useAddToCart();
-
-  if (isLoading) return <p>Loading ...</p>;
+  useEffect(() => {
+    if (isError) {
+      toast.error("Error loading product");
+    }
+  }, [isError]);
 
   return (
-    <div className="flex flex-col md:flex-row gap-8 my-8">
-      <ProductImagesSlider imageURL={data?.product.images[0]} />
-      <div className="space-y-6">
-        <p className="uppercase text-sm">{data?.product.category.name}</p>
-        <h3>{data?.product.title}</h3>
-        <p className="text-2xl text-primary font-bold">
-          ${data?.product.price}
-        </p>
-        <p>{data?.product.description}</p>
-        <span className="flex items-center space-x-2">
-          <div className="h-2 w-2 rounded-full bg-green-500" />
-          <p className="text-primary text-sm">In Stock</p>
-        </span>
-        <div className="flex sm:flex-row flex-col gap-4 ">
-          <ProductQuantityVariable
-            quantity={quantity}
-            setQuantity={setQuantity}
-          />
-          <CartButton
-            className="w-auto rounded"
-            isPending={isPending}
-            onClick={() => mutate({ productId: Number(id), quantity })}
-          />
+    <StateHandler
+      isLoading={isLoading}
+      isError={isError}
+      loadingFallback={
+        <div className="h-112 flex items-center justify-center">
+          <Spinner className="size-9" />
+        </div>
+      }
+      errorFallback={
+        <div className="h-112 flex items-center justify-center">
+          <p>Something went wrong.</p>
+        </div>
+      }
+    >
+      <div className="flex flex-col md:flex-row gap-8 my-8">
+        <ProductImagesSlider productImages={product?.images} />
+        <div className="space-y-6">
+          <p className="uppercase text-sm">{product?.category?.name}</p>
+          <h3>{product?.title}</h3>
+          <p className="text-2xl text-primary font-bold">${product?.price}</p>
+          <p>{product?.description}</p>
+          <StockDisplayer stock={product?.stock} />
+          <div className="flex sm:flex-row flex-col gap-4 ">
+            <ProductQuantityVariable
+              quantity={quantity}
+              setQuantity={setQuantity}
+            />
+            <CartButton
+              className={`w-auto rounded`}
+              disabled={product?.stock === 0}
+              productId={product?.id}
+              quantity={quantity}
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </StateHandler>
   );
 };
 export default ProductDetails;

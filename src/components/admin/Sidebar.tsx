@@ -1,9 +1,12 @@
-import { Hexagon, LayoutDashboard, ShoppingCart } from "lucide-react";
+import { Hexagon, LayoutDashboard, LogOut, ShoppingCart } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { useAuthContext } from "@/context/AuthContext";
 
 export const Sidebar = () => {
   const location = useLocation();
+
+  const { logout } = useAuthContext();
 
   const navItems = [
     { to: "/admin", label: "Dashboard", icon: LayoutDashboard },
@@ -13,7 +16,16 @@ export const Sidebar = () => {
 
   return (
     <div className="p-4 h-screen w-62 border-primary/20 border-r">
-      <h5>Admin</h5>
+      <div className="flex items-center justify-between">
+        <h5>
+          <Link to={"/"}>ATELIER</Link>
+        </h5>
+        <LogOut
+          size={18}
+          className="cursor-pointer"
+          onClick={async () => await logout()}
+        />
+      </div>
       <div className="space-y-4 mt-8">
         {navItems.map(({ to, label, icon: Icon }) => (
           <Link

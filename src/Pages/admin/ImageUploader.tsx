@@ -20,11 +20,11 @@ const ImageUploader = ({
 
   const handleFilesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
-    // When adding new files, keep existing images (strings or Files) and add new ones
+
     const existingImages = value || [];
     const updated = [...existingImages, ...files].slice(0, 5);
     onChange(updated);
-    // Clear the input so the same file can be selected again if needed
+
     if (inputRef.current) {
       inputRef.current.value = "";
     }

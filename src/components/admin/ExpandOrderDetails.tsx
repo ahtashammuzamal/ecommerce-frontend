@@ -4,6 +4,8 @@ import HLineBreaker from "../common/HLineBreaker";
 import { Button } from "../ui/button";
 import { updateOrderStatus } from "@/api/orders.api";
 import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
+import { queryKeys } from "@/constant/query-keys";
 
 const ExpandOrderDetails = ({
   orderId,
@@ -16,11 +18,14 @@ const ExpandOrderDetails = ({
   orderItems: OrderItem[];
   expandedId: number | null;
 }) => {
-  const orderStatus = ["Pending", "Paid", "Shipped", "Delivered", "Cancelled"];
+  const orderStatus = ["Pending", "Shipped", "Paid", "Delivered", "Cancelled"];
+
+  const queryClient = useQueryClient();
 
   const handleUpdateStatus = async (id: number, status: ORDER_STATUS) => {
     try {
       await updateOrderStatus(id, { status });
+      queryClient.invalidateQueries({ queryKey: [queryKeys.ORDERS] });
       toast.success(`Order status successfully updated`);
     } catch (error) {
       console.error(error);

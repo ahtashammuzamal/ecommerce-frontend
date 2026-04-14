@@ -19,7 +19,6 @@ import { Toaster } from "sonner";
 import { AuthProvider } from "./context/AuthProvider.tsx";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/query-client.ts";
-import CheckoutSuccess from "./Pages/CheckoutSuccess.tsx";
 import AccountLayout from "./components/layout/AccountLayout.tsx";
 import Orders from "./components/account/Orders.tsx";
 import Settings from "./components/account/Settings.tsx";
@@ -27,6 +26,8 @@ import Dashboard from "./Pages/admin/Dashboard.tsx";
 import { AdminLayout } from "./components/layout/AdminLayout.tsx";
 import ProductsManagement from "./Pages/admin/ProductsManagement.tsx";
 import OrdersManagement from "./Pages/admin/OrdersManagement.tsx";
+import ProtectedRoute from "./components/common/ProtectedRoute.tsx";
+import OrderSuccess from "./Pages/OrderSuccess.tsx";
 
 const routes: RouteObject[] = [
   {
@@ -53,11 +54,19 @@ const routes: RouteObject[] = [
   },
   {
     path: "/checkout",
-    element: <Checkout />,
+    element: (
+      <ProtectedRoute>
+        <Checkout />
+      </ProtectedRoute>
+    ),
   },
   {
-    path: "/checkout/success",
-    element: <CheckoutSuccess />,
+    path: "/checkout/success/:orderId",
+    element: (
+      <ProtectedRoute>
+        <OrderSuccess/>
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/auth",
@@ -79,11 +88,19 @@ const routes: RouteObject[] = [
     children: [
       {
         path: "orders",
-        element: <Orders />,
+        element: (
+          <ProtectedRoute>
+            <Orders />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "settings",
-        element: <Settings />,
+        element: (
+          <ProtectedRoute>
+            <Settings />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
@@ -93,15 +110,27 @@ const routes: RouteObject[] = [
     children: [
       {
         index: true,
-        element: <Dashboard />,
+        element: (
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "products",
-        element: <ProductsManagement />,
+        element: (
+          <ProtectedRoute>
+            <ProductsManagement />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "orders",
-        element: <OrdersManagement />,
+        element: (
+          <ProtectedRoute>
+            <OrdersManagement />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

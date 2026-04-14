@@ -2,17 +2,18 @@ import { Trash2 } from "lucide-react";
 import LineSpacer from "../common/LineSpacer";
 import { useRemoveFromCart } from "@/hooks/cart/useRemoveFromCart";
 import CartQuantityVariable from "./CartQuantityVariable";
+import { toast } from "sonner";
 
 type CartItemProps = {
   id: number;
   imageURL: string;
   title: string;
-  category: string;
+  category?: string;
   price: number;
   quantity: number;
 };
 
-const CartItem = ({
+const SingleCartItem = ({
   id,
   imageURL,
   title,
@@ -21,6 +22,15 @@ const CartItem = ({
   quantity,
 }: CartItemProps) => {
   const { mutate } = useRemoveFromCart();
+
+  const handleRemoveFromCart = (id: number) => {
+    try {
+      mutate(id);
+    } catch (error) {
+      console.error(error);
+      toast.error("Error in removing item from cart");
+    }
+  };
 
   return (
     <div>
@@ -39,7 +49,7 @@ const CartItem = ({
           </div>
           <div className="flex items-center justify-between">
             <CartQuantityVariable id={id} quantity={quantity} />
-            <Trash2 onClick={() => mutate(id)} />
+            <Trash2 onClick={() => handleRemoveFromCart(id)} />
           </div>
         </div>
       </div>
@@ -47,4 +57,4 @@ const CartItem = ({
     </div>
   );
 };
-export default CartItem;
+export default SingleCartItem;

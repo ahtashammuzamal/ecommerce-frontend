@@ -1,6 +1,6 @@
-import { Navigate } from "react-router-dom";
+import ChangePassword from "./ChangePassword";
 
 const Settings = () => {
-  return <Navigate to={"/account/orders"} replace />;
+  return <ChangePassword />;
 };
 export default Settings;
