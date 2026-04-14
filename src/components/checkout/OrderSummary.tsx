@@ -16,7 +16,7 @@ const OrderSummary = ({ className }: OrderSummaryProps) => {
       <p className="font-medium text-primary mb-4">Order Summary</p>
       <div className="space-y-8">
         <div className="flex justify-between items-center [&>p]:text-sm">
-          <p>Subtotal (3 items)</p>
+          <p>Subtotal ({data?.totalCartItems} items)</p>
           <p>${calculateSubtotal(data?.cart.cartItems)}</p>
         </div>
         <LineSpacer className={"max-w-none bg-black/10"} />
@@ -26,7 +26,7 @@ const OrderSummary = ({ className }: OrderSummaryProps) => {
               key={index}
               imageURL={item.product.images[0]}
               title={item.product.title}
-              category={item.product.category.name}
+              category={item.product.category?.name}
               subtotal={item.product.price * item.quantity}
             />
           ))}

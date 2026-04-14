@@ -34,7 +34,7 @@ const ProductsTable = ({
 
   const { mutate } = useDeleteProduct();
 
-  const handleDeleteProduct = async (id: number | undefined) => {
+  const handleDeleteProduct = async (id: number) => {
     const isConfirmed = window.confirm("Are you sure to delete this product?");
     if (!isConfirmed) return;
 

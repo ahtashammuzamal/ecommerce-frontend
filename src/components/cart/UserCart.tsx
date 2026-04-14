@@ -5,7 +5,7 @@ import OrderSummary from "./OrderSummary";
 import { useCart } from "@/hooks/cart/useCart";
 
 type UseCartProps = {
-  cartItems?: CartItem[];
+  cartItems: CartItem[];
   subTotal: number;
   totalCartItems?: number;
 };

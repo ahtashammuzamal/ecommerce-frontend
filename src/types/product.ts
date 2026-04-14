@@ -14,7 +14,7 @@ export interface Product {
   images: string[];
   stock: number;
   categoryId: number;
-  category?: Category;
+  category: Category;
 }
 
 export type ProductsResponse = {
