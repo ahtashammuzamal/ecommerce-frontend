@@ -43,7 +43,7 @@ This project was built to demonstrate practical frontend engineering skills in a
 - React Hook Form
 - Zod
 - Tailwind CSS 4
-- Radix UI
+- Shadcn UI
 - Axios
 
 ## Repository Relationship
