@@ -52,7 +52,9 @@ This project is intentionally separated into two repositories to reflect a real-
 
 - Frontend repository: [ecommerce-frontend](https://github.com/ahtashammuzamal/ecommerce-frontend)
 - Backend repository: [ecommerce-backend](https://github.com/ahtashammuzamal/ecommerce-backend)
-- Expected backend API base URL: `http://localhost:5000/api`
+- **Live Demo:** [https://atelier-goods.vercel.app/](https://atelier-goods.vercel.app/)
+- **Production API:** [https://ecommerce-backend-e5lf.onrender.com/api](https://ecommerce-backend-e5lf.onrender.com/api)
+- Expected local backend API base URL: `http://localhost:5000/api`
 
 ## Getting Started
 
@@ -103,6 +105,12 @@ The app will be available at `http://localhost:5173`.
 - `npm run build` creates a production build
 - `npm run lint` runs ESLint
 - `npm run preview` previews the production build locally
+
+## Deployment
+
+The application is deployed on **Vercel**.
+
+- **Live URL:** [https://atelier-goods.vercel.app/](https://atelier-goods.vercel.app/)
 
 ## What This Repository Demonstrates
 
