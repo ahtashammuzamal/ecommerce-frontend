@@ -8,12 +8,14 @@ export type ProductFiltersProps = {
   setIsActive?: React.Dispatch<React.SetStateAction<boolean>>;
   setFilters: React.Dispatch<React.SetStateAction<ProductFiltersType>>;
   filters: ProductFiltersType;
+  setSearchParams?: React.Dispatch<React.SetStateAction<URLSearchParams>>;
 };
 
 const ProductFilters = ({
   setIsActive,
   filters,
   setFilters,
+  setSearchParams
 }: ProductFiltersProps) => {
   return (
     <div className="space-y-6">
@@ -21,8 +23,17 @@ const ProductFilters = ({
         <p className="uppercase text-sm font-semibold text-primary">Filters</p>
         <X className="lg:hidden block" onClick={() => setIsActive?.(false)} />
       </div>
-      <CategoryFilter filters={filters} setFilters={setFilters} />
-      <PriceFilter filters={filters} setFilters={setFilters} />
+      <CategoryFilter
+        filters={filters}
+        setFilters={setFilters}
+        setIsActive={setIsActive}
+        setSearchParams={setSearchParams}
+      />
+      <PriceFilter
+        filters={filters}
+        setFilters={setFilters}
+        setIsActive={setIsActive}
+      />
     </div>
   );
 };

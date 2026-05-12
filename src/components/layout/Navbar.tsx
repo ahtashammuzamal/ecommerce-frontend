@@ -15,7 +15,10 @@ const Navbar = () => {
       />
       {isActive && (
         <div className="absolute top-20 w-full bg-secondary rounded-2xl lg:hidden">
-          <MenuLinks className={"flex flex-col items-center py-4"} />
+          <MenuLinks
+            className={"flex flex-col items-center py-4"}
+            setIsActive={setIsActive}
+          />
         </div>
       )}
       <Logo />

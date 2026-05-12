@@ -5,9 +5,14 @@ import type { ProductFiltersProps } from "./ProductFilters";
 const MIN_LIMIT = 0;
 const MAX_LIMIT = 1000;
 
-const PriceFilter = ({ filters, setFilters }: ProductFiltersProps) => {
+const PriceFilter = ({
+  filters,
+  setFilters,
+  setIsActive,
+}: ProductFiltersProps) => {
   const handlePriceChange = (value: number[]) => {
     setFilters((prev) => ({ ...prev, minPrice: value[0], maxPrice: value[1] }));
+    setIsActive?.(false);
   };
 
   const min = filters.minPrice ?? MIN_LIMIT;

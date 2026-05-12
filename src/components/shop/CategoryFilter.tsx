@@ -1,4 +1,3 @@
-import { Input } from "../ui/input";
 import type { ProductFiltersProps } from "./ProductFilters";
 import { getCategoriesApi } from "@/api/categories.api";
 import { useQuery } from "@tanstack/react-query";
@@ -7,8 +6,15 @@ import { toast } from "sonner";
 import type { Category } from "@/types";
 import StateHandler from "../common/StateHandler";
 import { useEffect } from "react";
+import { Label } from "../ui/label";
+import { Checkbox } from "../ui/checkbox";
 
-const CategoryFilter = ({ filters, setFilters }: ProductFiltersProps) => {
+const CategoryFilter = ({
+  filters,
+  setFilters,
+  setIsActive,
+  setSearchParams,
+}: ProductFiltersProps) => {
   const { data, isLoading, isError } = useQuery({
     queryKey: [queryKeys.CATEGORIES],
     queryFn: () => getCategoriesApi().then((res) => res.data),
@@ -24,17 +30,27 @@ const CategoryFilter = ({ filters, setFilters }: ProductFiltersProps) => {
     ? filters.categories.split(",")
     : [];
 
-  const handleCategoryFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name: newCategory } = e.target;
-
-    const nextCategories = selectedCategories.includes(newCategory)
-      ? selectedCategories.filter((c) => c !== newCategory)
-      : [...selectedCategories, newCategory];
+  const handleCategoryFilter = (slug: string) => {
+    const nextCategories = selectedCategories.includes(slug)
+      ? selectedCategories.filter((c) => c !== slug)
+      : [...selectedCategories, slug];
 
     setFilters((prev) => ({
       ...prev,
       categories: nextCategories.join(","),
     }));
+
+    setIsActive?.(false);
+
+    if (setSearchParams) {
+      const newSearchParams = new URLSearchParams();
+      if (nextCategories.length > 0) {
+        newSearchParams.set("categories", nextCategories.join(","));
+      } else {
+        newSearchParams.delete("categories");
+      }
+      setSearchParams(newSearchParams);
+    }
   };
 
   return (
@@ -45,18 +61,22 @@ const CategoryFilter = ({ filters, setFilters }: ProductFiltersProps) => {
           isLoading={isLoading}
           isError={isError}
           isEmpty={!data?.categories.length}
+          emptyFallback={<p>No category found</p>}
         >
           {data?.categories.map((category: Category) => (
             <span key={category.id} className="flex items-center gap-2">
-              <Input
-                type="checkbox"
-                name={category.slug}
-                id={category.slug}
-                className="w-4 h-4"
+              <Checkbox
                 checked={selectedCategories.includes(category.slug)}
-                onChange={handleCategoryFilter}
+                onCheckedChange={() => handleCategoryFilter(category.slug)}
+                id={category.slug}
+                className="w-4 h-4 cursor-pointer"
               />
-              <label htmlFor={category.slug}>{category.name}</label>
+              <Label
+                htmlFor={category.slug}
+                className="text-[15px] font-normal cursor-pointer"
+              >
+                {category.name}
+              </Label>
             </span>
           ))}
         </StateHandler>

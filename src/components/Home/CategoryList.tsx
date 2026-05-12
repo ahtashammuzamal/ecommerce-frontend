@@ -40,6 +40,7 @@ const CategoryList = () => {
               name={category.name}
               imageURL={category.imageURL}
               totalProducts={category.products?.length}
+              slug={category.slug}
             />
           ))}
         </StateHandler>

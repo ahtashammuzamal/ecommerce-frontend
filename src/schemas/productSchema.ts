@@ -9,6 +9,7 @@ export const productSchema = z.object({
     .min(1, "At least 1 image is required"),
   price: z.coerce.number().min(0.01, "Price must be greater than 0"),
   stock: z.coerce.number().min(0, "Stock cannot be negative"),
+  isFeatured: z.boolean(),
   categoryId: z.coerce
     .number({ invalid_type_error: "" })
     .int()

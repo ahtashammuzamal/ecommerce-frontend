@@ -28,6 +28,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import ImageUploader from "./ImageUploader";
 import useUpdateProduct from "@/hooks/products/useUpdateProduct";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const ProductForm = ({
   isOpen,
@@ -50,6 +51,7 @@ const ProductForm = ({
       images: [],
       price: 0,
       stock: 0,
+      isFeatured: false,
       categoryId: undefined,
     },
   });
@@ -70,7 +72,7 @@ const ProductForm = ({
   }, []);
 
   useEffect(() => {
-    if (!categories) return; 
+    if (!categories) return;
     if (product) {
       form.reset({
         title: product.title,
@@ -78,6 +80,7 @@ const ProductForm = ({
         images: product.images,
         price: product.price,
         stock: product.stock,
+        isFeatured: product.isFeatured,
         categoryId: product.categoryId,
       });
     } else {
@@ -87,6 +90,7 @@ const ProductForm = ({
         images: [],
         price: 0,
         stock: 0,
+        isFeatured: false,
         categoryId: undefined,
       });
     }
@@ -100,6 +104,9 @@ const ProductForm = ({
     formData.append("price", data.price);
     formData.append("stock", data.stock);
     formData.append("categoryId", data.categoryId);
+    formData.append("isFeatured", data.isFeatured);
+
+    console.log(data.isFeatured);
 
     if (formType === "create") {
       data.images.forEach((file: File) => {
@@ -227,7 +234,7 @@ const ProductForm = ({
                   />
                 )}
               />
-              <div className="flex gap-4">
+              <div className="grid grid-cols-3 gap-4">
                 <FormField
                   name="price"
                   control={form.control}
@@ -249,6 +256,23 @@ const ProductForm = ({
                       <FormLabel>Stock</FormLabel>
                       <FormControl>
                         <Input {...field} type="number" />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  name="isFeatured"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Is Featured</FormLabel>
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                          className="w-5 h-5"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

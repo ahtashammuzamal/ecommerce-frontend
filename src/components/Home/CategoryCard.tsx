@@ -4,11 +4,18 @@ type CategoryCardProps = {
   name: string;
   imageURL: string;
   totalProducts: number;
+  categoryId?: number;
+  slug:string
 };
 
-const CategoryCard = ({ name, imageURL, totalProducts }: CategoryCardProps) => {
+const CategoryCard = ({
+  name,
+  imageURL,
+  totalProducts,
+  slug
+}: CategoryCardProps) => {
   return (
-    <Link to={"/products"}>
+    <Link to={`/products?categories=${slug}`}>
       <div className="group overflow-hidden w-full h-80 md:h-110 sm:h-96 relative rounded-md flex items-end pb-8 pl-8">
         <div
           className="bg-img-styling"

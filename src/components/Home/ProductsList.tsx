@@ -10,7 +10,7 @@ import StateHandler from "../common/StateHandler";
 const ProductsList = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: [queryKeys.PRODUCTS],
-    queryFn: () => getAllProductsApi({ limit: 4 }).then((res) => res.data),
+    queryFn: () => getAllProductsApi({}).then((res) => res.data),
   });
 
   useEffect(() => {
@@ -33,17 +33,20 @@ const ProductsList = () => {
           isError={isError}
           isEmpty={!data?.products.length}
         >
-          {data?.products.slice(0, 4).map((product, index) => (
-            <ProductCard
-              key={index}
-              id={product.id}
-              imageURL={product.images[0]}
-              title={product.title}
-              categoryName={product.category?.name}
-              price={product.price}
-              stock={product.stock}
-            />
-          ))}
+          {data?.products
+            ?.filter((product) => product.isFeatured)
+            .slice(0, 4)
+            .map((product, index) => (
+              <ProductCard
+                key={index}
+                id={product.id}
+                imageURL={product.images[0]}
+                title={product.title}
+                categoryName={product.category?.name}
+                price={product.price}
+                stock={product.stock}
+              />
+            ))}
         </StateHandler>
       </div>
     </div>

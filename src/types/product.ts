@@ -15,6 +15,7 @@ export interface Product {
   price: number;
   images: string[];
   stock: number;
+  isFeatured?: boolean;
   categoryId: number;
   category: Category;
 }
