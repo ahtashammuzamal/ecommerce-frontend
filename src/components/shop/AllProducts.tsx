@@ -11,6 +11,7 @@ import { getAllProductsApi, type ProductFiltersType } from "@/api/products.api";
 import { toast } from "sonner";
 import StateHandler from "../common/StateHandler";
 import { useSearchParams } from "react-router-dom";
+import Pagination from "./Pagination";
 
 const AllProducts = ({
   setTotalProducts,
@@ -27,11 +28,10 @@ const AllProducts = ({
     categories: searchParams.get("categories") || "",
     minPrice: undefined,
     maxPrice: undefined,
-    limit: 20,
+    limit: 6,
     page: 1,
     order: "desc",
     sortBy: "createdAt",
-    isFeatured: true,
   });
 
   const { data, isLoading, isError } = useQuery({
@@ -111,6 +111,13 @@ const AllProducts = ({
             ))}
           </StateHandler>
         </div>
+        {data && data.meta.total > 0 && (
+          <Pagination
+            setFilters={setFilters}
+            filters={filters}
+            totalProducts={data.meta.total}
+          />
+        )}
       </div>
     </div>
   );

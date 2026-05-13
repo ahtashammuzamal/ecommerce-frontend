@@ -10,7 +10,6 @@ export type ProductFiltersType = {
   order?: "asc" | "desc";
   page?: number;
   limit?: number;
-  isFeatured?: boolean;
 };
 
 const cleanParams = (params: ProductFiltersType) => {
