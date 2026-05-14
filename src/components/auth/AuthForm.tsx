@@ -47,10 +47,8 @@ const AuthForm = ({ authType }: AuthFormProps) => {
         authType === "register" ? await register(data) : await login(data);
       toast.success(res.message);
       navigate("/");
-    } catch (error) {
-      toast.error(
-        authType === "login" ? "Login Failed" : "Registration failed.",
-      );
+    } catch (error: any) {
+      toast.error(error.response?.data?.message || "Something went wrong");
       console.error(error);
     }
   };

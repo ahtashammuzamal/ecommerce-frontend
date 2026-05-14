@@ -1,4 +1,4 @@
-import { Check, ShoppingBag } from "lucide-react";
+import { Check, Loader2, ShoppingBag } from "lucide-react";
 import IconButton from "./IconButton";
 import { useState, type ComponentPropsWithoutRef } from "react";
 import { useAddToCart } from "@/hooks/cart/useAddToCart";
@@ -44,6 +44,7 @@ const CartButton = ({ productId, quantity, ...props }: CartButtonProps) => {
   let icon = <ShoppingBag />;
 
   if (isPending) {
+    icon = <Loader2 className="animate-spin" />;
     content = "Adding to Cart";
   }
 

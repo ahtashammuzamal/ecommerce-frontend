@@ -51,6 +51,8 @@ const MenuLinks = ({ className, setIsActive }: MenuLinksProps) => {
         isError={isError}
         isEmpty={!data?.categories.length}
         loadingFallback={<Spinner />}
+        errorFallback={<p className="text-destructive text-sm">Failed to load categories</p>}
+        emptyFallback={<p className="text-sm">No categories found</p>}
       >
         {data?.categories.map((category: Category) => (
           <NavLink

@@ -49,7 +49,7 @@ const AllProducts = ({
 
   useEffect(() => {
     if (data?.products) {
-      setTotalProducts(data.products.length);
+      setTotalProducts(data.meta.total);
     }
   });
 

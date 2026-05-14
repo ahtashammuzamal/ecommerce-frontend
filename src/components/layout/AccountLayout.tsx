@@ -42,9 +42,9 @@ const AccountLayout = () => {
             <HLineBreaker />
             <div className="flex flex-col items-baseline">
               <IconButton
-                to="/account/orders"
+                to="/account"
                 variant={"link"}
-                className={`${location.pathname === "/account/orders" ? "underline" : ""}`}
+                className={`${location.pathname === "/account" ? "underline" : ""}`}
               >
                 <HexagonIcon />
                 Orders

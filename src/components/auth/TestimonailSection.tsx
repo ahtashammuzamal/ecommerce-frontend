@@ -1,6 +1,6 @@
 const TestimonailSection = () => {
   return (
-    <div className="bg-center bg-no-repeat bg-cover bg-[url('/category.jpg')] h-full flex items-end p-12 relative">
+    <div className="bg-center bg-no-repeat bg-cover bg-[url('/hero.jpg')] h-full flex items-end p-12 relative">
       <div className="absolute top-0 left-0 w-full h-full bg-primary/30" />
       <div className="[&>p]:text-primary-foreground z-1">
         <p className="font-semibold">

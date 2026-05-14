@@ -39,7 +39,7 @@ const AccountOptions = () => {
                 <Link to={"/account/settings"}>Profile</Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link to={"/account/orders"}>Orders</Link>
+                <Link to={"/account"}>Orders</Link>
               </DropdownMenuItem>
               {user?.role === "ADMIN" && (
                 <DropdownMenuItem asChild>

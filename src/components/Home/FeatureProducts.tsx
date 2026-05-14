@@ -7,10 +7,11 @@ import { toast } from "sonner";
 import { useEffect } from "react";
 import StateHandler from "../common/StateHandler";
 
-const ProductsList = () => {
+const FeatureProducts = () => {
   const { data, isLoading, isError } = useQuery({
-    queryKey: [queryKeys.PRODUCTS],
-    queryFn: () => getAllProductsApi({}).then((res) => res.data),
+    queryKey: [queryKeys.PRODUCTS, { isFeatured: true }],
+    queryFn: () =>
+      getAllProductsApi({ isFeatured: true }).then((res) => res.data),
   });
 
   useEffect(() => {
@@ -33,23 +34,20 @@ const ProductsList = () => {
           isError={isError}
           isEmpty={!data?.products.length}
         >
-          {data?.products
-            ?.filter((product) => product.isFeatured)
-            .slice(0, 4)
-            .map((product, index) => (
-              <ProductCard
-                key={index}
-                id={product.id}
-                imageURL={product.images[0]}
-                title={product.title}
-                categoryName={product.category?.name}
-                price={product.price}
-                stock={product.stock}
-              />
-            ))}
+          {data?.products?.map((product, index) => (
+            <ProductCard
+              key={index}
+              id={product.id}
+              imageURL={product.images[0]}
+              title={product.title}
+              categoryName={product.category?.name}
+              price={product.price}
+              stock={product.stock}
+            />
+          ))}
         </StateHandler>
       </div>
     </div>
   );
 };
-export default ProductsList;
+export default FeatureProducts;

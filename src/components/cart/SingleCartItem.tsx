@@ -1,4 +1,4 @@
-import { Trash2 } from "lucide-react";
+import { Loader2, Trash2 } from "lucide-react";
 import LineSpacer from "../common/LineSpacer";
 import { useRemoveFromCart } from "@/hooks/cart/useRemoveFromCart";
 import CartQuantityVariable from "./CartQuantityVariable";
@@ -21,11 +21,15 @@ const SingleCartItem = ({
   price,
   quantity,
 }: CartItemProps) => {
-  const { mutate } = useRemoveFromCart();
+  const { mutate, isPending, error } = useRemoveFromCart();
 
   const handleRemoveFromCart = (id: number) => {
     try {
-      mutate(id);
+      mutate(id, {
+        onError: () => {
+          toast.error("Error in removing item from cart");
+        },
+      });
     } catch (error) {
       console.error(error);
       toast.error("Error in removing item from cart");
@@ -49,7 +53,11 @@ const SingleCartItem = ({
           </div>
           <div className="flex items-center justify-between">
             <CartQuantityVariable id={id} quantity={quantity} />
-            <Trash2 onClick={() => handleRemoveFromCart(id)} />
+            {isPending ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              <Trash2 onClick={() => handleRemoveFromCart(id)} />
+            )}
           </div>
         </div>
       </div>

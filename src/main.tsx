@@ -87,7 +87,7 @@ const routes: RouteObject[] = [
     element: <AccountLayout />,
     children: [
       {
-        path: "orders",
+        index: true,
         element: (
           <ProtectedRoute>
             <Orders />
