@@ -21,7 +21,7 @@ const SingleCartItem = ({
   price,
   quantity,
 }: CartItemProps) => {
-  const { mutate, isPending, error } = useRemoveFromCart();
+  const { mutate, isPending } = useRemoveFromCart();
 
   const handleRemoveFromCart = (id: number) => {
     try {
