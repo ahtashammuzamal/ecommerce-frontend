@@ -177,8 +177,8 @@ const ProductForm = ({
 
   return (
     isOpen && (
-      <div className="absolute top-0 left-0 h-screen w-full bg-primary/50 z-10 flex items-center justify-center">
-        <div className="bg-primary-foreground w-1/4 p-4 rounded-sm space-y-6">
+      <div className="fixed top-0 left-0 h-screen w-full bg-primary/50 z-10 flex items-center justify-center p-4 overflow-y-auto">
+        <div className="bg-primary-foreground w-11/12 md:w-1/4 p-4 rounded-sm space-y-6">
           <div className="flex items-center justify-between border-b border-primary/10 pb-6">
             <h5>{formType === "create" ? "Add Product" : "Edit Product"}</h5>
             <X

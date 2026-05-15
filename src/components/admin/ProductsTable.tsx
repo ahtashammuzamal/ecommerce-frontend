@@ -57,8 +57,8 @@ const ProductsTable = ({
   }, [isError]);
 
   return (
-    <div className="mt-8 w-full">
-      <table className="w-full text-left border-primary/10 border rounded-lg ">
+    <div className="mt-8 w-full overflow-x-auto border border-primary/10 rounded-lg">
+      <table className="w-full min-w-[800px] text-left">
         <thead className="bg-secondary/30 text-sm text-primary font-medium border border-primary/10">
           <tr>
             <th className="px-6 py-3">Product</th>

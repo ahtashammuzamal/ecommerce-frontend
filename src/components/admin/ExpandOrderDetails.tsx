@@ -6,6 +6,8 @@ import { updateOrderStatus } from "@/api/orders.api";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/constant/query-keys";
+import { useState, useTransition } from "react";
+import { Loader2 } from "lucide-react";
 
 const ExpandOrderDetails = ({
   orderId,
@@ -22,15 +24,24 @@ const ExpandOrderDetails = ({
 
   const queryClient = useQueryClient();
 
-  const handleUpdateStatus = async (id: number, status: ORDER_STATUS) => {
-    try {
-      await updateOrderStatus(id, { status });
-      queryClient.invalidateQueries({ queryKey: [queryKeys.ORDERS] });
-      toast.success(`Order status successfully updated`);
-    } catch (error) {
-      console.error(error);
-      toast.error("Error updatating order status");
-    }
+  const [isPending, startTransition] = useTransition();
+  const [targetStatus, setTargetStatus] = useState<ORDER_STATUS | null>(null);
+
+  const handleUpdateStatus = (id: number, status: ORDER_STATUS) => {
+    setTargetStatus(status);
+    startTransition(async () => {
+      try {
+        await updateOrderStatus(id, { status });
+        await queryClient.invalidateQueries({ queryKey: [queryKeys.ORDERS] });
+        toast.success(`Order status successfully updated`);
+      } catch (error: any) {
+        toast.error(
+          error?.response?.data.message || "Error updating order status.",
+        );
+      } finally {
+        setTargetStatus(null);
+      }
+    });
   };
 
   return (
@@ -91,6 +102,9 @@ const ExpandOrderDetails = ({
                     }
                   >
                     {status}
+                    {isPending && targetStatus === status.toUpperCase() && (
+                      <Loader2 className="animate-spin" />
+                    )}
                   </Button>
                 ))}
               </div>
