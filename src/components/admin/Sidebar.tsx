@@ -19,7 +19,9 @@ export const Sidebar = ({
 }) => {
   const location = useLocation();
 
-  const { logout } = useAuthContext();
+  const { logout, user } = useAuthContext();
+
+  console.log(user);
 
   const navItems = [
     { to: "/admin", label: "Dashboard", icon: LayoutDashboard },
@@ -63,11 +65,11 @@ export const Sidebar = ({
       <div className="flex items-center justify-between relative">
         <div className="flex items-center gap-2">
           <span className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground">
-            JD
+            {user?.name?.split(" ")[0].slice(0, 1).toUpperCase()}
           </span>
           <div>
-            <p className="text-sm">John Doe</p>
-            <p className="text-xs">john@gmail.com</p>
+            <p className="text-sm">{user?.name}</p>
+            <p className="text-xs">{user?.email}</p>
           </div>
         </div>
         <LogOut
