@@ -5,7 +5,7 @@ type OrderSummaryProps = {
 };
 
 import OrderItem from "./OrderItem";
-import { useCart } from "@/hooks/cart/useCart";
+import { useCart } from "@/hooks/tanstack/cart/useCart";
 import { calculateSubtotal } from "@/lib/utils";
 
 const OrderSummary = ({ className }: OrderSummaryProps) => {

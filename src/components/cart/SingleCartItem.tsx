@@ -1,6 +1,6 @@
 import { Loader2, Trash2 } from "lucide-react";
 import LineSpacer from "../common/LineSpacer";
-import { useRemoveFromCart } from "@/hooks/cart/useRemoveFromCart";
+import { useRemoveFromCart } from "@/hooks/tanstack/cart/useRemoveFromCart";
 import CartQuantityVariable from "./CartQuantityVariable";
 import { toast } from "sonner";
 

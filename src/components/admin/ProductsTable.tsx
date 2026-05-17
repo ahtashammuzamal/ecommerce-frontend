@@ -1,14 +1,12 @@
-import { getAllProductsApi } from "@/api/products.api";
-import { queryKeys } from "@/constant/query-keys";
-import useDeleteProduct from "@/hooks/products/useDeleteProduct";
+import useDeleteProduct from "@/hooks/tanstack/products/useDeleteProduct";
 import { truncateTitle } from "@/lib/utils";
 import type { Product } from "@/types";
-import { useQuery } from "@tanstack/react-query";
 import { Edit, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import StateHandler from "../common/StateHandler";
 import { useEffect } from "react";
+import useProducts from "@/hooks/tanstack/products/useProducts";
 
 const ProductsTable = ({
   setIsOpen,
@@ -17,10 +15,11 @@ const ProductsTable = ({
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setProduct: React.Dispatch<React.SetStateAction<Product | null>>;
 }) => {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: [queryKeys.PRODUCTS],
-    queryFn: () =>
-      getAllProductsApi({ order: "desc", limit: 100 }).then((res) => res.data),
+  const { data, isLoading, isError } = useProducts({
+    filters: {
+      order: "desc",
+      limit: 100,
+    },
   });
 
   const handleUpdateProduct = async (id: number) => {

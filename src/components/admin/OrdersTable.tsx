@@ -1,22 +1,17 @@
-import { getAllOrders } from "@/api/orders.api";
-import { queryKeys } from "@/constant/query-keys";
 import { statusConfig } from "@/lib/status-config";
-import { useQuery } from "@tanstack/react-query";
 import { ChevronDown } from "lucide-react";
 import React, { useState } from "react";
 import { organizeDate } from "@/lib/utils";
 import ExpandOrderDetails from "./ExpandOrderDetails";
 import StateHandler from "../common/StateHandler";
+import useOrders from "@/hooks/tanstack/orders/useOrders";
 
 const OrdersTable = () => {
-  const { data, isPending, isError } = useQuery({
-    queryKey: [queryKeys.ORDERS],
-    queryFn: () => getAllOrders().then((res) => res.data),
-  });
+  const { data, isPending, isError } = useOrders();
 
   const [expandedId, setExpandedId] = useState<number | null>(null);
 
-  console.log(data?.orders[0])
+  console.log(data?.orders[0]);
 
   return (
     <div className="mt-8 w-full overflow-x-auto border border-primary/10 rounded-lg">

@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import useCreateProduct from "@/hooks/products/useCreateProduct";
+import useCreateProduct from "@/hooks/tanstack/products/useCreateProduct";
 import { productSchema } from "@/schemas/productSchema";
 import type { Category, Product } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,7 +27,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import ImageUploader from "./ImageUploader";
-import useUpdateProduct from "@/hooks/products/useUpdateProduct";
+import useUpdateProduct from "@/hooks/tanstack/products/useUpdateProduct";
 import { Checkbox } from "@/components/ui/checkbox";
 
 const ProductForm = ({

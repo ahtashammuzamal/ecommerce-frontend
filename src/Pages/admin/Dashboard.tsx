@@ -1,7 +1,7 @@
 import { getAllOrders } from "@/api/orders.api";
-import { getAllProductsApi } from "@/api/products.api";
 import PageHeader from "@/components/admin/PageHeader";
 import { queryKeys } from "@/constant/query-keys";
+import useProducts from "@/hooks/tanstack/products/useProducts";
 import { useQuery } from "@tanstack/react-query";
 import {
   CheckCircle,
@@ -17,9 +17,8 @@ const Dashboard = () => {
     queryFn: () => getAllOrders().then((res) => res.data),
   });
 
-  const { data: productsData, isPending: isLoadingProducts } = useQuery({
-    queryKey: [queryKeys.PRODUCTS],
-    queryFn: () => getAllProductsApi({ limit: 1 }).then((res) => res.data),
+  const { data: productsData, isPending: isLoadingProducts } = useProducts({
+    filters: { limit: 1 },
   });
 
   const totalRevenue =

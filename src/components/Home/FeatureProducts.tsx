@@ -1,24 +1,12 @@
 import ProductCard from "../common/ProductCard";
 import SectionHeader from "./SectionHeader";
-import { useQuery } from "@tanstack/react-query";
-import { queryKeys } from "@/constant/query-keys";
-import { getAllProductsApi } from "@/api/products.api";
-import { toast } from "sonner";
-import { useEffect } from "react";
 import StateHandler from "../common/StateHandler";
+import useProducts from "@/hooks/tanstack/products/useProducts";
 
 const FeatureProducts = () => {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: [queryKeys.PRODUCTS, { isFeatured: true }],
-    queryFn: () =>
-      getAllProductsApi({ isFeatured: true }).then((res) => res.data),
+  const { data, isPending, isError } = useProducts({
+    filters: { isFeatured: true },
   });
-
-  useEffect(() => {
-    if (isError) {
-      toast.error("Error loading products");
-    }
-  }, [isError]);
 
   return (
     <div className="section-spacing">
@@ -30,7 +18,7 @@ const FeatureProducts = () => {
       />
       <div className="section-elements-styling">
         <StateHandler
-          isLoading={isLoading}
+          isLoading={isPending}
           isError={isError}
           isEmpty={!data?.products.length}
         >

@@ -5,13 +5,12 @@ import IconButton from "../common/IconButton";
 import { SlidersHorizontal } from "lucide-react";
 import useWindowSize from "@/hooks/useWindowSize";
 import SearchFilter from "./SearchFilter";
-import { useQuery } from "@tanstack/react-query";
-import { queryKeys } from "@/constant/query-keys";
-import { getAllProductsApi, type ProductFiltersType } from "@/api/products.api";
+import { type ProductFiltersType } from "@/api/products.api";
 import { toast } from "sonner";
 import StateHandler from "../common/StateHandler";
 import { useSearchParams } from "react-router-dom";
 import Pagination from "./Pagination";
+import useProducts from "@/hooks/tanstack/products/useProducts";
 
 const AllProducts = ({
   setTotalProducts,
@@ -34,11 +33,7 @@ const AllProducts = ({
     sortBy: "createdAt",
   });
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: [queryKeys.PRODUCTS, filters],
-    queryFn: () => getAllProductsApi(filters).then((res) => res.data),
-    placeholderData: (prev) => prev,
-  });
+  const { data, isPending, isError } = useProducts({ filters });
 
   useEffect(() => {
     const categoryParam = searchParams.get("categories");
@@ -93,7 +88,7 @@ const AllProducts = ({
         <SearchFilter filters={filters} setFilters={setFilters} />
         <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6">
           <StateHandler
-            isLoading={isLoading}
+            isLoading={isPending}
             isError={isError}
             isEmpty={!data?.products.length}
             emptyFallback={<p>No product found</p>}

@@ -14,10 +14,10 @@ import { checkoutSchema } from "@/schemas/checkoutSchema";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { createOrderApi } from "@/api/orders.api";
-import { useClearCart } from "@/hooks/cart/useClearCart";
+import { useClearCart } from "@/hooks/tanstack/cart/useClearCart";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useCart } from "@/hooks/cart/useCart";
+import { useCart } from "@/hooks/tanstack/cart/useCart";
 
 type CheckoutFormProps = {
   className: string;

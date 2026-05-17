@@ -1,13 +1,9 @@
 import type { ProductFiltersProps } from "./ProductFilters";
-import { getCategoriesApi } from "@/api/categories.api";
-import { useQuery } from "@tanstack/react-query";
-import { queryKeys } from "@/constant/query-keys";
-import { toast } from "sonner";
 import type { Category } from "@/types";
 import StateHandler from "../common/StateHandler";
-import { useEffect } from "react";
 import { Label } from "../ui/label";
 import { Checkbox } from "../ui/checkbox";
+import useCategories from "@/hooks/tanstack/categories/useCategories";
 
 const CategoryFilter = ({
   filters,
@@ -15,16 +11,7 @@ const CategoryFilter = ({
   setIsActive,
   setSearchParams,
 }: ProductFiltersProps) => {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: [queryKeys.CATEGORIES],
-    queryFn: () => getCategoriesApi().then((res) => res.data),
-  });
-
-  useEffect(() => {
-    if (isError) {
-      toast.error("Error loading category filters");
-    }
-  }, []);
+  const { data, isPending, isError } = useCategories();
 
   const selectedCategories = filters.categories
     ? filters.categories.split(",")
@@ -58,7 +45,7 @@ const CategoryFilter = ({
       <p className="text-primary text-sm font-medium">Category</p>
       <div className="space-y-1">
         <StateHandler
-          isLoading={isLoading}
+          isLoading={isPending}
           isError={isError}
           isEmpty={!data?.categories.length}
           emptyFallback={<p>No category found</p>}

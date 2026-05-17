@@ -1,5 +1,5 @@
 import { useAuthContext } from "@/context/AuthContext";
-import { useCart } from "@/hooks/cart/useCart";
+import { useCart } from "@/hooks/tanstack/cart/useCart";
 import { Loader2, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
 

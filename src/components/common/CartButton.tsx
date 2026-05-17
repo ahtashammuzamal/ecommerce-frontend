@@ -1,7 +1,7 @@
 import { Check, Loader2, ShoppingBag } from "lucide-react";
 import IconButton from "./IconButton";
 import { useState, type ComponentPropsWithoutRef } from "react";
-import { useAddToCart } from "@/hooks/cart/useAddToCart";
+import { useAddToCart } from "@/hooks/tanstack/cart/useAddToCart";
 import { useAuthContext } from "@/context/AuthContext";
 import type React from "react";
 import { toast } from "sonner";

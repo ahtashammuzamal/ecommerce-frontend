@@ -1,24 +1,11 @@
 import CategoryCard from "./CategoryCard";
 import SectionHeader from "./SectionHeader";
-import { useQuery } from "@tanstack/react-query";
-import { getCategoriesApi } from "@/api/categories.api";
-import { queryKeys } from "@/constant/query-keys";
-import { toast } from "sonner";
 import type { Category } from "@/types";
-import { useEffect } from "react";
 import StateHandler from "../common/StateHandler";
+import useCategories from "@/hooks/tanstack/categories/useCategories";
 
 const CategoryList = () => {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: [queryKeys.CATEGORIES],
-    queryFn: () => getCategoriesApi().then((res) => res.data),
-  });
-
-  useEffect(() => {
-    if (isError) {
-      toast.error("Error loading categories");
-    }
-  }, [isError]);
+  const { data, isPending, isError } = useCategories();
 
   return (
     <div className="section-spacing">
@@ -30,7 +17,7 @@ const CategoryList = () => {
       />
       <div className="section-elements-styling">
         <StateHandler
-          isLoading={isLoading}
+          isLoading={isPending}
           isError={isError}
           isEmpty={!data?.categories?.length}
         >

@@ -1,7 +1,7 @@
 import IconButton from "../common/IconButton";
 import { Loader2, Minus, Plus } from "lucide-react";
 import { Input } from "../ui/input";
-import { useUpdateCart } from "@/hooks/cart/useUpdateCart";
+import { useUpdateCart } from "@/hooks/tanstack/cart/useUpdateCart";
 import { toast } from "sonner";
 
 type CartQuantityVariableProps = {
