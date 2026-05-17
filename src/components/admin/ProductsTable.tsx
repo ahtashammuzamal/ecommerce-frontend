@@ -15,7 +15,7 @@ const ProductsTable = ({
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setProduct: React.Dispatch<React.SetStateAction<Product | null>>;
 }) => {
-  const { data, isLoading, isError } = useProducts({
+  const { data, isPending, isError } = useProducts({
     filters: {
       order: "desc",
       limit: 100,
@@ -69,7 +69,7 @@ const ProductsTable = ({
         </thead>
         <tbody>
           <StateHandler
-            isLoading={isLoading}
+            isLoading={isPending}
             isEmpty={!data?.products.length}
             isError={isError}
           >
