@@ -25,7 +25,7 @@ const UserCart = ({
       isLoading={isPending}
       loadingFallback={<div className="h-80 flex items-center justify-center"><Spinner className="h-8 w-8"/></div>}
       isError={isError}
-      isEmpty={!totalCartItems}
+      isEmpty={!cartItems.length}
       emptyFallback={<EmptyCart />}
     >
       <div className="py-8 flex md:flex-row flex-col gap-8 justify-between items-start">

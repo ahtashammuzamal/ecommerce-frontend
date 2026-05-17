@@ -12,13 +12,13 @@ const Cart = () => {
     <>
       <PageHeader
         title={"Shopping Cart"}
-        description={`${isAuthenticated && !isPending ? data?.totalCartItems : "0"} items`}
+        description={`${data?.cart?.cartItems ? `${data.cart.cartItems.length} items` : "0 items"}`}
       />
       <UserCart
         cartItems={data?.cart?.cartItems || []}
         subTotal={calculateSubtotal(data?.cart?.cartItems)}
-        totalCartItems={data?.totalCartItems}
-        isPending={isPending}
+        totalCartItems={data?.cart?.cartItems.length || 0}
+        isPending={isAuthenticated && isPending}
         isError={isError}
       />
     </>

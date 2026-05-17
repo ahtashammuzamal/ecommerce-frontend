@@ -6,7 +6,8 @@ type UpdateCartApiData = {
   action: "increment" | "decrement";
 };
 
-export const getUserCartApi = () => api.get<GetCartApiResponse>("/cart");
+export const getUserCartApi = () =>
+  api.get<GetCartApiResponse>("/cart");
 
 export const addToCartApi = (data: { productId: number; quantity: number }) =>
   api.post("/cart/add", data);

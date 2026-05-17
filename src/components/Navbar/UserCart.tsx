@@ -11,7 +11,7 @@ export const UserCart = () => {
     <Link to={"/cart"} className="relative">
       <ShoppingBag size={18} className="theme-dark-text" />
       <div className="absolute bg-primary w-4 h-4 rounded-full flex items-center justify-center text-white bottom-2 left-3 text-[8px]">
-        {isPending ? <Loader2 /> : isAuthenticated ? data?.totalCartItems : "0"}
+        {!isAuthenticated ? "0" : isPending ? <Loader2 className="h-2 w-2 animate-spin" /> : data?.totalCartItems || 0}
       </div>
     </Link>
   );

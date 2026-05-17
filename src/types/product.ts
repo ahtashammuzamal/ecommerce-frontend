@@ -31,7 +31,6 @@ export type ProductsResponse = {
 };
 
 export type SingleProductResponse = {
-  message: string;
   product: Product;
 };
 

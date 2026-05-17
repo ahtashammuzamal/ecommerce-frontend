@@ -12,9 +12,9 @@ export interface Cart {
 }
 
 export type GetCartApiResponse = {
-  sucess: boolean;
+  success: boolean;
   totalCartItems: number;
-  cart: {
+  cart?: {
     id: number;
     userId: number;
     cartItems: CartItem[];

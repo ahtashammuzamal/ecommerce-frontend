@@ -17,11 +17,11 @@ const OrderSummary = ({ className }: OrderSummaryProps) => {
       <div className="space-y-8">
         <div className="flex justify-between items-center [&>p]:text-sm">
           <p>Subtotal ({data?.totalCartItems} items)</p>
-          <p>${calculateSubtotal(data?.cart.cartItems)}</p>
+          <p>${calculateSubtotal(data?.cart?.cartItems)}</p>
         </div>
         <LineSpacer className={"max-w-none bg-black/10"} />
         <div className="space-y-4">
-          {data?.cart.cartItems.map((item, index) => (
+          {data?.cart?.cartItems.map((item, index) => (
             <OrderItem
               key={index}
               imageURL={item.product.images[0]}
@@ -34,7 +34,7 @@ const OrderSummary = ({ className }: OrderSummaryProps) => {
         </div>
         <div className="flex justify-between items-center [&>p]:text-primary [&>p]:font-semibold">
           <p>Total</p>
-          <p>${calculateSubtotal(data?.cart.cartItems)}</p>
+          <p>${calculateSubtotal(data?.cart?.cartItems)}</p>
         </div>
       </div>
     </div>

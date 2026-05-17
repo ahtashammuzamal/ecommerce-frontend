@@ -1,12 +1,9 @@
-import { getCategoriesApi } from "@/api/categories.api";
-import { queryKeys } from "@/constant/query-keys";
-import { useQuery } from "@tanstack/react-query";
-import React, { useEffect } from "react";
+import React from "react";
 import { NavLink, useLocation, useSearchParams } from "react-router-dom";
-import { toast } from "sonner";
 import StateHandler from "../common/StateHandler";
 import type { Category } from "@/types";
 import { Spinner } from "../ui/spinner";
+import useCategories from "@/hooks/tanstack/categories/useCategories";
 
 type MenuLinksProps = {
   className: string;
@@ -14,16 +11,7 @@ type MenuLinksProps = {
 };
 
 const MenuLinks = ({ className, setIsActive }: MenuLinksProps) => {
-  const { data, isPending, isError } = useQuery({
-    queryKey: [queryKeys.CATEGORIES],
-    queryFn: () => getCategoriesApi().then((res) => res.data),
-  });
-
-  useEffect(() => {
-    if (isError) {
-      toast.error("Error loading categories");
-    }
-  }, [isError]);
+  const { data, isPending, isError } = useCategories();
 
   const [searchParams, setSearchParams] = useSearchParams();
   const activeCategory = searchParams.get("categories");
@@ -51,7 +39,9 @@ const MenuLinks = ({ className, setIsActive }: MenuLinksProps) => {
         isError={isError}
         isEmpty={!data?.categories.length}
         loadingFallback={<Spinner />}
-        errorFallback={<p className="text-destructive text-sm">Failed to load categories</p>}
+        errorFallback={
+          <p className="text-destructive text-sm">Failed to load categories</p>
+        }
         emptyFallback={<p className="text-sm">No categories found</p>}
       >
         {data?.categories.map((category: Category) => (
