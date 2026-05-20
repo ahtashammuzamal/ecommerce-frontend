@@ -21,8 +21,8 @@ const StateHandler = ({
   children,
 }: StateHandlerProps) => {
   if (isLoading) return <>{loadingFallback}</>;
-  if (isError) return <p>{errorFallback}</p>;
-  if (isEmpty) return <p>{emptyFallback}</p>;
+  if (isError) return <>{errorFallback}</>;
+  if (isEmpty) return <>{emptyFallback}</>;
 
   return <>{children}</>;
 };

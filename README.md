@@ -45,6 +45,7 @@ This project was built to demonstrate practical frontend engineering skills in a
 - Tailwind CSS 4
 - Shadcn UI
 - Axios
+- Vitest & React Testing Library (for unit/integration tests)
 
 ## Repository Relationship
 
@@ -102,9 +103,11 @@ The app will be available at `http://localhost:5173`.
 ## Available Scripts
 
 - `npm run dev` starts the local development server
-- `npm run build` creates a production build
+- `npm run build` creates a production build and runs TypeScript checks
 - `npm run lint` runs ESLint
 - `npm run preview` previews the production build locally
+- `npm run test` starts the interactive Vitest test runner (watch mode)
+- `npm run test:run` runs the entire test suite once and outputs results
 
 ## Deployment
 
@@ -120,9 +123,22 @@ The application is deployed on **Vercel**.
 - Query-based data fetching and cache invalidation
 - Reusable UI composition for customer and admin interfaces
 
+## Testing
+
+The codebase includes a fully-configured testing suite covering 97 tests across unit, integration, and UI component layers.
+
+- **Test Framework**: Vitest (configured with `jsdom` virtual browser environment)
+- **Library**: React Testing Library & user-event for DOM rendering and interaction emulation
+- **Coverage**:
+  - **Unit**: Zod schemas validation validation rules (auth, checkout), utilities math (cart subtotal summation, date formatting, class merging).
+  - **API Callers**: Axios mock calls (auth, cart, orders, products) validating endpoints and payloads.
+  - **Hooks**: Custom TanStack Query states (`useCart`, `useProducts`) validating caching and load/success phases.
+  - **Contexts**: `AuthProvider` session verification on mount, state changes, cookie setting, and query cache clearance.
+  - **Components & Pages**: Buttons, Inputs, Pagination limits, Product Cards, Protected Routes, State Handlers, Auth/Registration Forms, CartPage subtotal lists, and ProductsPage category search/filters.
+- **Global mocks**: Seamless global mock definitions for standard DOM APIs missing from jsdom (e.g. `ResizeObserver` for Radix UI layouts).
+
 ## Next Improvements
 
-- Add automated tests for critical user journeys
 - Add deployment links and CI checks
 - Add payment gateway integration beyond cash on delivery
 
